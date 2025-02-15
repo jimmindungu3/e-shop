@@ -7,23 +7,48 @@ import "swiper/css/pagination";
 
 const Hero = () => {
   return (
-    <div className="max-w-7xl mx-auto flex pt-4">
+    <div className="max-w-7xl mx-auto hidden md:flex pt-4 mb-6">
       {/* Left Column: Categories */}
-      <div className="w-1/4 pt-4 px-4">
-        {/* Categories List */}
+      <div className="w-1/4">
         {[
-          { title: "Electronics", items: "Fridges, Electric Kettle, Blender, TV, Speakers" },
-          { title: "Fashion", items: "Shoes, T-Shirts, Watches, Sunglasses, Bags" },
-          { title: "Home & Kitchen", items: "Cookware, Dishes, Blenders, Curtains, Lamps" },
-          { title: "Sports & Fitness", items: "Dumbbells, Yoga Mats, Treadmills, Cycling Gear" },
-          { title: "Toys & Games", items: "Board Games, Dolls, Action Figures, Puzzles" },
-          { title: "Beauty & Health", items: "Makeup, Skincare, Perfumes, Supplements" },
-          { title: "Automotive", items: "Car Covers, Engine Oil, Air Fresheners, Tools" }
+          {
+            title: "Electronics",
+            items: "Fridges, Electric Kettle, Blender, TV, Speakers",
+          },
+          {
+            title: "Fashion & Style",
+            items: "Shoes, T-Shirts, Watches, Sunglasses, Bags",
+          },
+          {
+            title: "Home & Kitchen",
+            items: "Cookware, Dishes, Blenders, Curtains, Lamps",
+          },
+          {
+            title: "Sports & Fitness",
+            items: "Dumbbells, Yoga Mats, Treadmills, Cycling Gear",
+          },
+          {
+            title: "Toys & Games",
+            items: "Board Games, Dolls, Action Figures, Puzzles",
+          },
+          {
+            title: "Beauty & Health",
+            items: "Makeup, Skincare, Perfumes, Supplements",
+          },
+          {
+            title: "Automotive",
+            items: "Car Covers, Engine Oil, Air Fresheners, Tools",
+          },
+          {
+            title: "Office Supplies",
+            items: "Desks, Chairs, Printers, Notebooks, Whiteboards",
+          },
         ].map((category, index) => (
-          <div key={index} className="mb-4">
-            <h3 className="cursor-pointer hover:text-red-500 font-medium">
-              {category.title}
-            </h3>
+          <div
+            key={index}
+            className="px-3 py-1 hover:bg-gray-200 cursor-pointer"
+          >
+            <h3 className="font-medium">{category.title}</h3>
             <p className="text-sm text-gray-600">{category.items}</p>
           </div>
         ))}
@@ -31,8 +56,8 @@ const Hero = () => {
 
       {/* Right Column: Image Slider */}
       <div className="w-3/4 ml-4 overflow-hidden">
-        <Swiper 
-          modules={[Navigation, Pagination, Autoplay]} 
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
           autoplay={{ delay: 3500 }}
           loop
           navigation
@@ -44,7 +69,7 @@ const Hero = () => {
               <img
                 src={`https://fakeimg.pl/800x490/fafafa/828282?text=Slide+${num}`}
                 alt={`Slide ${num}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover border border-gray-100"
               />
             </SwiperSlide>
           ))}

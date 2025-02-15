@@ -8,8 +8,8 @@ import {
 
 const About = () => {
   return (
-    <div className="bg-gray-200 pb-6">
-      <div className="max-w-7xl mx-auto mt-8 p-6 space-y-4">
+    <div className="bg-gray-200 pb-6 px-4">
+      <div className="max-w-7xl mx-auto mt-8 py-8 space-y-4 text-sm">
         <h2 className="text-3xl font-bold">Why Shop With US</h2>
         <p>
           Welcome to our ecommerce platform, where quality meets affordability.
@@ -34,8 +34,8 @@ const About = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-gray-100 p-6 rounded-lg text-center">
-            <h3 className="text-xl font-semibold">Subscribe to Our Emails</h3>
-            <p>Stay updated with the latest deals and exclusive offers.</p>
+            <h3 className="text-xl font-semibold mb-2">Subscribe to Our Emails</h3>
+            <p className="mb-2">Stay updated with the latest deals and exclusive offers.</p>
             <input
               type="email"
               placeholder="Enter your email"
@@ -46,9 +46,9 @@ const About = () => {
             </button>
           </div>
           <div className="bg-gray-100 p-6 rounded-lg text-center">
-            <h3 className="text-xl font-semibold mb-6">Follow Us on Socials</h3>
-            <p>Connect with us for updates and exclusive content.</p>
-            <div className="flex justify-center space-x-4 mt-6">
+            <h3 className="text-xl font-semibold mb-2">Follow Us On Our Socials</h3>
+            <p className="mb-2">Connect with us for updates and exclusive content.</p>
+            <div className="flex justify-center space-x-4">
               <a href="#" className="text-blue-600 text-2xl">
                 <FaFacebook />
               </a>

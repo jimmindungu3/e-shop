@@ -1,9 +1,14 @@
 import React from "react";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaXTwitter,
+} from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-10 px-6">
+    <footer className="bg-gray-800 text-white text-sm py-10 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* My Account */}
@@ -50,23 +55,9 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Countries */}
+          {/* Social links */}
           <div>
-            <h3 className="font-bold">Countries</h3>
-            <ul className="mt-2 space-y-1">
-              <li>Country 1</li>
-              <li>Country 2</li>
-              <li>Country 3</li>
-              <li>Country 4</li>
-              <li>Country 5</li>
-              <li>Country 6</li>
-              <li>Country 7</li>
-            </ul>
-          </div>
-
-          {/* Social Links & Contact */}
-          <div>
-            <h3 className="font-bold">Social Links</h3>
+            <h3 className="font-bold">Cennect With Us</h3>
             <div className="mt-2 flex space-x-4">
               <a href="#" className="text-blue-600 text-2xl">
                 <FaFacebook />
@@ -77,8 +68,15 @@ const Footer = () => {
               <a href="#" className="text-pink-500 text-2xl">
                 <FaInstagram />
               </a>
+              <a href="#" className="text-white text-2xl">
+                <FaXTwitter />
+              </a>
             </div>
-            <h3 className="font-bold mt-4">Contact Us</h3>
+          </div>
+
+          {/* Social Links & Contact */}
+          <div>
+            <h3 className="font-bold">Contact Us</h3>
             <p className="mt-2">+123-456-7890</p>
             <p>+098-765-4321</p>
             <p>123 Main Street, City, Country</p>
