@@ -1,7 +1,7 @@
 import React from "react";
 import {
   FaFacebook,
-  FaTwitter,
+  FaTiktok,
   FaInstagram,
   FaXTwitter,
 } from "react-icons/fa6";
@@ -34,8 +34,12 @@ const About = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-gray-100 p-6 rounded-lg text-center">
-            <h3 className="text-xl font-semibold mb-2">Subscribe to Our Emails</h3>
-            <p className="mb-2">Stay updated with the latest deals and exclusive offers.</p>
+            <h3 className="text-xl font-semibold mb-2">
+              Subscribe to Our Emails
+            </h3>
+            <p className="mb-2">
+              Stay updated with the latest deals and exclusive offers.
+            </p>
             <input
               type="email"
               placeholder="Enter your email"
@@ -46,14 +50,18 @@ const About = () => {
             </button>
           </div>
           <div className="bg-gray-100 p-6 rounded-lg text-center">
-            <h3 className="text-xl font-semibold mb-2">Follow Us On Our Socials</h3>
-            <p className="mb-2">Connect with us for updates and exclusive content.</p>
+            <h3 className="text-xl font-semibold mb-2">
+              Follow Us On Our Socials
+            </h3>
+            <p className="mb-2">
+              Connect with us for updates and exclusive content.
+            </p>
             <div className="flex justify-center space-x-4">
               <a href="#" className="text-blue-600 text-2xl">
                 <FaFacebook />
               </a>
-              <a href="#" className="text-blue-400 text-2xl">
-                <FaTwitter />
+              <a href="#" className="text-gray-700 text-2xl">
+                <FaTiktok />
               </a>
               <a href="#" className="text-pink-500 text-2xl">
                 <FaInstagram />

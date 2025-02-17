@@ -6,6 +6,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const Hero = () => {
+  const slideImages = [
+    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFjYm9va3xlbnwwfHwwfHx8MA%3D%3D",
+    "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8amV3ZWxsZXJ5fGVufDB8fDB8fHww",
+    "https://images.unsplash.com/photo-1500995617113-cf789362a3e1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dG95c3xlbnwwfHwwfHx8MA%3D%3D"
+  ];
+
   return (
     <div className="max-w-7xl mx-auto hidden md:flex pt-4 mb-6">
       {/* Left Column: Categories */}
@@ -58,18 +64,18 @@ const Hero = () => {
       <div className="w-3/4 ml-4 overflow-hidden">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
-          autoplay={{ delay: 3500 }}
+          autoplay={{ delay: 5000 }}
           loop
           navigation
           pagination={{ clickable: true }}
           className="w-full h-[490px]"
         >
-          {[1, 2, 3].map((num) => (
-            <SwiperSlide key={num}>
+          {slideImages.map((src, index) => (
+            <SwiperSlide key={index}>
               <img
-                src={`https://fakeimg.pl/800x490/fafafa/828282?text=Slide+${num}`}
-                alt={`Slide ${num}`}
-                className="w-full h-full object-cover border border-gray-100"
+                src={src}
+                alt={`Slide ${index + 1}`}
+                className="w-full h-full object-cover border rounded-md border-gray-100"
               />
             </SwiperSlide>
           ))}

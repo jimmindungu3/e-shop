@@ -1,7 +1,7 @@
 import React from "react";
 import {
   FaFacebook,
-  FaTwitter,
+  FaTiktok,
   FaInstagram,
   FaXTwitter,
 } from "react-icons/fa6";
@@ -57,13 +57,13 @@ const Footer = () => {
 
           {/* Social links */}
           <div>
-            <h3 className="font-bold">Cennect With Us</h3>
+            <h3 className="font-bold">Connect With Us</h3>
             <div className="mt-2 flex space-x-4">
               <a href="#" className="text-blue-600 text-2xl">
                 <FaFacebook />
               </a>
-              <a href="#" className="text-blue-400 text-2xl">
-                <FaTwitter />
+              <a href="#" className="text-white text-2xl">
+                <FaTiktok />
               </a>
               <a href="#" className="text-pink-500 text-2xl">
                 <FaInstagram />

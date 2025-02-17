@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
-const trendingProducts = [
-  { id: 1, name: "Wireless Earbuds", price: "$129", tag: "Hot Deal" },
-  { id: 2, name: "Gaming Laptop", price: "$1,299", tag: "New Arrival" },
-  { id: 3, name: "4K Smart TV", price: "$899", tag: "Bestseller" },
-  { id: 4, name: "Bluetooth Speaker", price: "$79", tag: "Trending" },
-  { id: 5, name: "DSLR Camera", price: "$599", tag: "Limited Stock" },
-  { id: 6, name: "Fitness Tracker", price: "$99", tag: "Popular" },
-];
-
 const TopSellers = () => {
+  const [bestSellers, setBestSellers] = useState([]);
+
+  useEffect(() => {
+    const fetchBestSellers = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/products/random");
+        if (!res.ok) throw new Error("Network response was not ok");
+        const data = await res.json();
+        setBestSellers(data);
+      } catch (error) {
+        console.error("Error fetching best seller products:", error);
+      }
+    };
+
+    fetchBestSellers();
+  }, []);
+
   return (
     <div className="max-w-7xl mx-auto px-2">
       <style>
@@ -49,7 +57,7 @@ const TopSellers = () => {
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={8}
-        slidesPerView={2} // default for extra-small screens
+        slidesPerView={2}
         navigation
         autoplay={{ delay: 3000 }}
         loop
@@ -60,22 +68,34 @@ const TopSellers = () => {
           1024: { slidesPerView: 5 },
         }}
       >
-        {trendingProducts.map((product) => (
-          <SwiperSlide key={product.id}>
+        {bestSellers.map((product) => (
+          <SwiperSlide key={product._id}>
             <div className="product-card group bg-white shadow-sm rounded-lg p-1.5 cursor-pointer hover:shadow-md transition">
               <div className="relative mb-1.5 max-w-[150px] sm:max-w-[180px] mx-auto">
                 <div className="w-full aspect-square bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden text-xs">
-                  <span className="text-gray-500 text-sm">{product.name}</span>
+                  {product.images && product.images.length > 0 ? (
+                    <img
+                      src={product.images[0]}
+                      alt={product.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-gray-500 text-sm">{product.title}</span>
+                  )}
                 </div>
-                <span className="absolute top-1 left-1 bg-red-600 text-white px-1.5 py-0.5 rounded-full text-xs font-medium">
-                  {product.tag}
-                </span>
+                {product.sales > 0 && (
+                  <span className="absolute top-1 left-1 bg-red-600 text-white px-1.5 py-0.5 rounded-full text-xs font-medium">
+                    Bestseller
+                  </span>
+                )}
               </div>
               <div className="text-center">
                 <h3 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition">
-                  {product.name}
+                  {product.title}
                 </h3>
-                <p className="text-gray-700 font-bold mt-1 text-xs">{product.price}</p>
+                <p className="text-gray-700 font-bold mt-1 text-xs">
+                  ${product.price}
+                </p>
                 <button className="mt-2 bg-red-600 text-white text-xs font-medium px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                   Shop Now
                 </button>
