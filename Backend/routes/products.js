@@ -1,5 +1,5 @@
 const express = require("express");
-const Product = require("../models/products"); // Adjust path if needed
+const Product = require("../models/product");
 
 const router = express.Router();
 
@@ -47,7 +47,6 @@ router.get("/category/:category", async (req, res) => {
 });
 
 // GET /api/products/keywords - Fetch products by multiple keywords provided as an array in the query string
-// Example request: GET /api/products/keywords?keywords=word1&keywords=word2
 router.get("/keywords", async (req, res) => {
   try {
     let { keywords } = req.query;

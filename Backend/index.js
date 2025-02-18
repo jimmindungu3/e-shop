@@ -11,16 +11,13 @@ const DB_URI = process.env.DB_URI;
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.get("/", (req, res) => {
-  res.json({ message: "We're up!!!" });
-});
-
 // Import routes
 const productRoutes = require("./routes/products");
+const usersRoutes = require("./routes/users");
 
 // Use routes
 app.use("/api/products", productRoutes);
+app.use("/api/users", usersRoutes);
 
 // DB Connection
 mongoose
@@ -35,3 +32,8 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
     process.exit(1);
   });
+
+// Routes
+app.get("/", (req, res) => {
+  res.json({ message: "We're up!!!" });
+});
