@@ -7,6 +7,7 @@ import "swiper/css/autoplay";
 
 const TopSellers = () => {
   const [bestSellers, setBestSellers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -15,13 +16,29 @@ const TopSellers = () => {
         if (!res.ok) throw new Error("Network response was not ok");
         const data = await res.json();
         setBestSellers(data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching best seller products:", error);
+        setLoading(false);
       }
     };
 
     fetchBestSellers();
   }, []);
+
+  // Skeleton loader component
+  const ProductSkeleton = () => (
+    <div className="product-card group bg-white shadow-sm rounded-lg p-1.5">
+      <div className="relative mb-1.5 max-w-[150px] sm:max-w-[180px] mx-auto">
+        <div className="w-full aspect-square bg-gray-200 animate-pulse rounded-lg" />
+      </div>
+      <div className="text-center">
+        <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto mt-2 animate-pulse" />
+        <div className="h-3 bg-gray-200 rounded w-1/4 mx-auto mt-1 animate-pulse" />
+        <div className="h-6 bg-gray-200 rounded-full w-2/4 mx-auto mt-2 animate-pulse" />
+      </div>
+    </div>
+  );
 
   return (
     <div className="max-w-7xl mx-auto px-2">
@@ -59,8 +76,8 @@ const TopSellers = () => {
         spaceBetween={8}
         slidesPerView={2}
         navigation
-        autoplay={{ delay: 3000 }}
-        loop
+        autoplay={!loading ? { delay: 3000 } : false}
+        loop={!loading}
         className="pb-6"
         breakpoints={{
           640: { slidesPerView: 2 },
@@ -68,41 +85,51 @@ const TopSellers = () => {
           1024: { slidesPerView: 5 },
         }}
       >
-        {bestSellers.map((product) => (
-          <SwiperSlide key={product._id}>
-            <div className="product-card group bg-white shadow-sm rounded-lg p-1.5 cursor-pointer hover:shadow-md transition">
-              <div className="relative mb-1.5 max-w-[150px] sm:max-w-[180px] mx-auto">
-                <div className="w-full aspect-square bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden text-xs">
-                  {product.images && product.images.length > 0 ? (
-                    <img
-                      src={product.images[0]}
-                      alt={product.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-gray-500 text-sm">{product.title}</span>
+        {loading ? (
+          // Show skeleton slides while loading
+          [...Array(5)].map((_, index) => (
+            <SwiperSlide key={`skeleton-${index}`}>
+              <ProductSkeleton />
+            </SwiperSlide>
+          ))
+        ) : (
+          // Show actual products when loaded
+          bestSellers.map((product) => (
+            <SwiperSlide key={product._id}>
+              <div className="product-card group bg-white shadow-sm rounded-lg p-1.5 cursor-pointer hover:shadow-md transition">
+                <div className="relative mb-1.5 max-w-[150px] sm:max-w-[180px] mx-auto">
+                  <div className="w-full aspect-square rounded-lg flex items-center justify-center overflow-hidden text-xs">
+                    {product.images && product.images.length > 0 ? (
+                      <img
+                        src={product.images[0]}
+                        alt={product.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-gray-500 text-sm">{product.title}</span>
+                    )}
+                  </div>
+                  {product.sales > 0 && (
+                    <span className="absolute top-1 left-1 bg-red-600 text-white px-1.5 py-0.5 rounded-full text-xs font-medium">
+                      Bestseller
+                    </span>
                   )}
                 </div>
-                {product.sales > 0 && (
-                  <span className="absolute top-1 left-1 bg-red-600 text-white px-1.5 py-0.5 rounded-full text-xs font-medium">
-                    Bestseller
-                  </span>
-                )}
+                <div className="text-center">
+                  <h3 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition">
+                    {product.title}
+                  </h3>
+                  <p className="text-gray-700 font-bold mt-1 text-xs">
+                    ${product.price}
+                  </p>
+                  <button className="mt-2 bg-red-600 text-white text-xs font-medium px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    Shop Now
+                  </button>
+                </div>
               </div>
-              <div className="text-center">
-                <h3 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition">
-                  {product.title}
-                </h3>
-                <p className="text-gray-700 font-bold mt-1 text-xs">
-                  ${product.price}
-                </p>
-                <button className="mt-2 bg-red-600 text-white text-xs font-medium px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                  Shop Now
-                </button>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
+            </SwiperSlide>
+          ))
+        )}
       </Swiper>
     </div>
   );
