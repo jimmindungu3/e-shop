@@ -70,4 +70,26 @@ router.post("/signin", async (req, res) => {
   }
 });
 
+router.put("/user/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updates = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    res
+      .status(200)
+      .json({ message: "User updated successfully.", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ error: "Server error.", details: error.message });
+  }
+});
+
 module.exports = router;

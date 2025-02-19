@@ -67,4 +67,70 @@ router.get("/keywords", async (req, res) => {
   }
 });
 
+// GET /api/products/:id – Retrieve a single product by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found." });
+    }
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/products/search?q= – Search products by title or description
+router.get("/search", async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q) {
+      return res.status(400).json({ error: "Search query is required." });
+    }
+    const products = await Product.find({
+      $or: [
+        { title: { $regex: q, $options: "i" } },
+        { description: { $regex: q, $options: "i" } },
+      ],
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT /api/products/:id - Edit a product
+router.put("/:id", async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const updates = req.body;
+    const updatedProduct = await Product.findByIdAndUpdate(productId, updates, {
+      new: true,
+      runValidators: true,
+    });
+    if (!updatedProduct) {
+      return res.status(404).json({ error: "Product not found." });
+    }
+    res.status(200).json({
+      message: "Product updated successfully.",
+      product: updatedProduct,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE /api/products/:id – Delete a product by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "Product not found." });
+    }
+    res.status(200).json({ message: "Product deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
