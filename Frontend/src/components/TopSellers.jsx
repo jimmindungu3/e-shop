@@ -8,6 +8,7 @@ import "swiper/css/autoplay";
 const TopSellers = () => {
   const [bestSellers, setBestSellers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -16,9 +17,10 @@ const TopSellers = () => {
         if (!res.ok) throw new Error("Network response was not ok");
         const data = await res.json();
         setBestSellers(data);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching best seller products:", error);
+        setError(true);
+      } finally {
         setLoading(false);
       }
     };
@@ -28,8 +30,8 @@ const TopSellers = () => {
 
   // Skeleton loader component
   const ProductSkeleton = () => (
-    <div className="product-card group bg-white shadow-sm rounded-lg p-1.5">
-      <div className="relative mb-1.5 max-w-[150px] sm:max-w-[180px] mx-auto">
+    <div className="product-card group bg-white shadow-sm rounded-lg p-2">
+      <div className="relative mb-2 max-w-[150px] sm:max-w-[180px] mx-auto">
         <div className="w-full aspect-square bg-gray-200 animate-pulse rounded-lg" />
       </div>
       <div className="text-center">
@@ -68,69 +70,84 @@ const TopSellers = () => {
       </style>
 
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-bold text-gray-900">Trending Now</h2>
+        <h2 className="text-2xl font-bold text-brandOrange">Top Sellers</h2>
       </div>
 
-      <Swiper
-        modules={[Navigation, Autoplay]}
-        spaceBetween={8}
-        slidesPerView={2}
-        navigation
-        autoplay={!loading ? { delay: 3000 } : false}
-        loop={!loading}
-        className="pb-6"
-        breakpoints={{
-          640: { slidesPerView: 2 },
-          768: { slidesPerView: 3 },
-          1024: { slidesPerView: 5 },
-        }}
-      >
-        {loading ? (
-          // Show skeleton slides while loading
-          [...Array(5)].map((_, index) => (
-            <SwiperSlide key={`skeleton-${index}`}>
-              <ProductSkeleton />
-            </SwiperSlide>
-          ))
-        ) : (
-          // Show actual products when loaded
-          bestSellers.map((product) => (
-            <SwiperSlide key={product._id}>
-              <div className="product-card group bg-white shadow-sm rounded-lg p-1.5 cursor-pointer hover:shadow-md transition">
-                <div className="relative mb-1.5 max-w-[150px] sm:max-w-[180px] mx-auto">
-                  <div className="w-full aspect-square rounded-lg flex items-center justify-center overflow-hidden text-xs">
-                    {product.images && product.images.length > 0 ? (
-                      <img
-                        src={product.images[0]}
-                        alt={product.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-gray-500 text-sm">{product.title}</span>
-                    )}
+      {error ? (
+        <p className="text-red-500 text-center">Failed to load products. Please try again.</p>
+      ) : (
+        <Swiper
+          modules={[Navigation, Autoplay]}
+          spaceBetween={16}
+          slidesPerView={2}
+          navigation
+          autoplay={!loading ? { delay: 3000 } : false}
+          loop={!loading}
+          className="pb-6"
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 5 },
+          }}
+        >
+          {loading
+            ? [...Array(5)].map((_, index) => (
+                <SwiperSlide key={`skeleton-${index}`}>
+                  <ProductSkeleton />
+                </SwiperSlide>
+              ))
+            : bestSellers.map((product) => (
+                <SwiperSlide key={product._id}>
+                  <div className="product-card group bg-white shadow-sm rounded-lg p-2 cursor-pointer hover:shadow-md transition">
+                    {/* Product Image */}
+                    <div className="relative mb-2 max-w-[160px] sm:max-w-[200px] mx-auto">
+                      <div className="w-full aspect-square rounded-lg flex items-center justify-center overflow-hidden text-xs bg-gray-100">
+                        {product.images && product.images.length > 0 ? (
+                          <img
+                            src={product.images[0]}
+                            alt={product.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-gray-500 text-sm">No Image</span>
+                        )}
+                      </div>
+                      {/* Bestseller Tag */}
+                      {product.sales > 0 && (
+                        <span className="absolute top-1 left-1 bg-red-600 text-white px-2 py-0.5 rounded-full text-xs font-medium">
+                          Bestseller
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Product Details */}
+                    <div className="px-2">
+                      <h3 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition">
+                        {product.title}
+                      </h3>
+
+                      <span>
+                        {/* Price */}
+                      <p className="text-brandOrange font-bold mt-1 text-sm">
+                        Ksh. {product.price}
+                      </p>
+
+                      {/* Stock Availability */}
+                      <p className={`mt-1 text-xs font-medium ${product.quantity > 0 ? "text-green-600" : "text-red-600"}`}>
+                        {product.quantity > 0 ? "In Stock" : "Out of Stock"}
+                      </p>
+                      </span>
+
+                      {/* Shop Now Button */}
+                      <button className="mt-2 bg-brandOrange text-white text-xs font-medium px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        Shop Now
+                      </button>
+                    </div>
                   </div>
-                  {product.sales > 0 && (
-                    <span className="absolute top-1 left-1 bg-red-600 text-white px-1.5 py-0.5 rounded-full text-xs font-medium">
-                      Bestseller
-                    </span>
-                  )}
-                </div>
-                <div className="text-center">
-                  <h3 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition">
-                    {product.title}
-                  </h3>
-                  <p className="text-gray-700 font-bold mt-1 text-xs">
-                    ${product.price}
-                  </p>
-                  <button className="mt-2 bg-red-600 text-white text-xs font-medium px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    Shop Now
-                  </button>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))
-        )}
-      </Swiper>
+                </SwiperSlide>
+              ))}
+        </Swiper>
+      )}
     </div>
   );
 };

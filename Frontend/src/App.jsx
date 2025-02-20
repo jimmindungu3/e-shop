@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
 import Header from "./components/Header";
 import TopRibbon from "./components/TopRibbon";
@@ -9,15 +10,34 @@ import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <div className="font-roboto">
+    <Router>
       <Header />
       <TopRibbon />
-      <Hero />
-      <TopSellers />
-      <RandomProducts />
-      <About />
+
+      <Routes>
+        {/* Home Page */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <TopSellers />
+              <RandomProducts />
+              <About />
+            </>
+          }
+        />
+
+        {/* Other Pages */}
+        {/* <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} /> */}
+
+        {/* 404 Page */}
+        {/* <Route path="*" element={<NotFound />} /> */}
+      </Routes>
+
       <Footer />
-    </div>
+    </Router>
   );
 };
 

@@ -13,13 +13,13 @@ const TopRibbon = () => {
         </div>
 
         {/* Middle: Search Bar */}
-        <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+        <div className="flex items-center border border-gray-400 rounded-lg overflow-hidden h-10 w-full mx-4 lg:max-w-2xl">
           <input
             type="text"
             placeholder="Search"
-            className="p-2 w-full outline-none"
+            className="px-3 w-full outline-none h-full"
           />
-          <button className="bg-gray-500 text-white px-4 py-2 rounded-sm">
+          <button className="text-gray-600 bg-white px-4 h-full flex items-center justify-center">
             <IoSearch />
           </button>
         </div>
@@ -34,7 +34,7 @@ const TopRibbon = () => {
             <FaShoppingCart className="text-xl" />
             <span className="hidden sm:inline font-medium">Cart</span>
             {/* Cart Counter Placeholder */}
-            <span className="absolute -top-2 -right-5 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+            <span className="absolute -top-2 -right-5 bg-brandOrange text-white text-xs font-bold px-2 py-0.5 rounded-full">
               0
             </span>
           </div>

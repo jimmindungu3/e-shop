@@ -7,6 +7,9 @@ export default {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
+      colors: {
+        brandOrange: "#FF6600",
+      },
     },
   },
   plugins: [],

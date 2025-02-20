@@ -10,7 +10,7 @@ const About = () => {
   return (
     <div className="bg-gray-200 pb-6 px-4">
       <div className="max-w-7xl mx-auto mt-8 py-8 space-y-4 text-sm">
-        <h2 className="text-3xl font-bold">Why Shop With US</h2>
+        <h2 className="text-3xl font-bold text-brandOrange">Why Shop With US</h2>
         <p>
           Welcome to our ecommerce platform, where quality meets affordability.
           We strive to bring you the best products at unbeatable prices.
@@ -45,7 +45,7 @@ const About = () => {
               placeholder="Enter your email"
               className="w-full p-2 mt-2 border rounded"
             />
-            <button className="mt-3 px-4 py-2 bg-blue-600 text-white rounded">
+            <button className="mt-3 px-4 py-2 border bg-brandOrange hover:bg-gray-100 hover:text-brandOrange hover:border-brandOrange text-white rounded">
               Subscribe
             </button>
           </div>
