@@ -31,7 +31,7 @@ const Hero = () => {
           {
             title: "Gadgets & Accessories",
             items:
-              "Smartwatches, Wireless Earbuds, Power Banks, Drones, Cameras",
+              "Smartwatches, Wireless Earbuds, Power Banks, Cameras",
           },
           {
             title: "Beauty & Health",
@@ -62,7 +62,7 @@ const Hero = () => {
             key={index}
             className="px-3 py-1 hover:bg-gray-200 cursor-pointer"
           >
-            <h3 className="font-medium text-brandOrange">{category.title}</h3>
+            <h3 className="font-medium text-gray-800">{category.title}</h3>
             <p className="text-sm text-gray-600 ">{category.items}</p>
           </div>
         ))}
@@ -94,3 +94,6 @@ const Hero = () => {
 };
 
 export default Hero;
+
+
+// 

@@ -16,7 +16,7 @@ const TopRibbon = () => {
         <div className="flex items-center border border-gray-400 rounded-lg overflow-hidden h-10 w-full mx-4 lg:max-w-2xl">
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search Products Here"
             className="px-3 w-full outline-none h-full"
           />
           <button className="text-gray-600 bg-white px-4 h-full flex items-center justify-center">

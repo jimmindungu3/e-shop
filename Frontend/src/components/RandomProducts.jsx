@@ -17,9 +17,9 @@ const RandomProducts = () => {
         setRandomProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
-        setError(true);
+        setTimeout(() => setError(true), 10000); // Delay error state by 3 seconds
       } finally {
-        setLoading(false);
+        setTimeout(() => setLoading(false), 500); // Keep skeleton for 3 seconds
       }
     };
 
@@ -86,13 +86,11 @@ const RandomProducts = () => {
                     <p className="text-gray-500 text-xs mt-1">{product.description.slice(0, 100)}...</p>
 
                     {/* Price */}
-                    <p className="text-brandOrange font-bold mt-1 text-sm">Ksh. {product.price}</p>
-
+                    <p className="text-brandOrange font-bold mt-1 text-sm">Ksh. {product.price.toLocaleString()}</p>
                     {/* Stock Availability */}
                     <p className={`mt-1 text-xs font-medium ${product.quantity > 0 ? "text-green-600" : "text-red-600"}`}>
                       {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                     </p>
-
                     {/* Shop Now Button */}
                     <button className="mt-2 bg-brandOrange text-white text-xs font-medium px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                       Shop Now
