@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  FaFacebook,
-  FaTiktok,
-  FaInstagram,
-  FaXTwitter,
-} from "react-icons/fa6";
+import { FaFacebook, FaTiktok, FaInstagram, FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -16,14 +12,10 @@ const Footer = () => {
             <h3 className="font-bold">My account</h3>
             <ul className="mt-2 space-y-2">
               <li>
-                <a href="#" className="hover:underline">
-                  Sign in
-                </a>
+                <Link to={"/sign-in"}>Sign In</Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
-                  Create account
-                </a>
+                <Link to={"/sign-up"}>Create Account</Link>
               </li>
             </ul>
           </div>
@@ -37,11 +29,11 @@ const Footer = () => {
                   Our Story
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#" className="hover:underline">
                   Contact Us
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a href="#" className="hover:underline">
                   Our Brands
@@ -77,10 +69,10 @@ const Footer = () => {
           {/* Social Links & Contact */}
           <div>
             <h3 className="font-bold">Contact Us</h3>
-            <p className="mt-2">+123-456-7890</p>
-            <p>+098-765-4321</p>
-            <p>123 Main Street, City, Country</p>
-            <p>
+            <p className="mt-2">+254-717-055-495</p>
+            <p>+254-789-335-955</p>
+            {/* <p>123 Main Street, City, Country</p> */}
+            {/* <p>
               <strong>Monday - Friday:</strong> 08:00am - 6:00pm
             </p>
             <p>
@@ -88,13 +80,17 @@ const Footer = () => {
             </p>
             <p>
               <strong>Sundays & Holidays:</strong> Closed
-            </p>
-            <p className="text-blue-400 hover:underline cursor-pointer">
-              email@example.com
-            </p>
-            <p className="text-blue-400 hover:underline cursor-pointer">
+            </p> */}
+            <a
+              href="mailto:email@xirionafrica.com"
+              className="text-blue-400 hover:underline cursor-pointer"
+            >
+              email@xirionafrica.com
+            </a>
+
+            {/* <p className="text-blue-400 hover:underline cursor-pointer">
               View on map
-            </p>
+            </p> */}
           </div>
         </div>
         <p className="text-sm mt-6">&copy; 2011 - 2025 CompanyName&reg;</p>

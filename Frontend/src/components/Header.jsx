@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="max-w-7xl mx-auto flex justify-between items-center py-4">
+    <header className="max-w-7xl mx-auto flex justify-between items-center p-3">
       <Link to={"/"} className="text-3xl flex items-center space-x-2 text-brandOrange">
         <GiCircuitry />
         <span>
