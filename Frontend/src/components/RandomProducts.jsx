@@ -11,7 +11,9 @@ const RandomProducts = () => {
   useEffect(() => {
     const fetchRandomProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/products/random");
+        const response = await fetch(
+          "http://localhost:5000/api/products/random"
+        );
         if (!response.ok) throw new Error("Failed to fetch products");
         const data = await response.json();
         setRandomProducts(data);
@@ -47,11 +49,15 @@ const RandomProducts = () => {
       </div>
 
       {error ? (
-        <p className="text-red-500 text-center">Failed to load products. Please try again.</p>
+        <p className="text-red-500 text-center">
+          Failed to load products. Please try again.
+        </p>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8">
           {loading
-            ? [...Array(10)].map((_, index) => <ProductSkeleton key={`skeleton-${index}`} />)
+            ? [...Array(10)].map((_, index) => (
+                <ProductSkeleton key={`skeleton-${index}`} />
+              ))
             : randomProducts.map((product) => (
                 <div
                   key={product._id}
@@ -77,18 +83,24 @@ const RandomProducts = () => {
                       </span>
                     )}
                   </div>
-
                   {/* Product Details */}
                   <div className="px-2">
                     <h3 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition">
                       {product.title}
                     </h3>
-                    <p className="text-gray-500 text-xs mt-1">{product.description.slice(0, 100)}...</p>
-
+                    <p className="text-gray-500 text-xs mt-1">
+                      {product.description.slice(0, 100)}...
+                    </p>
                     {/* Price */}
-                    <p className="text-brandOrange font-bold mt-1 text-sm">Ksh. {product.price.toLocaleString()}</p>
+                    <p className="text-brandOrange font-bold mt-1 text-sm">
+                      Ksh. {product.price.toLocaleString()}
+                    </p>
                     {/* Stock Availability */}
-                    <p className={`mt-1 text-xs font-medium ${product.quantity > 0 ? "text-green-600" : "text-red-600"}`}>
+                    <p
+                      className={`mt-1 text-xs font-medium ${
+                        product.quantity > 0 ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
                       {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                     </p>
                     {/* Shop Now Button */}

@@ -1,42 +1,22 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
-import Header from "./components/Header";
-import TopRibbon from "./components/TopRibbon";
-import Hero from "./components/Hero";
-import TopSellers from "./components/TopSellers";
-import RandomProducts from "./components/RandomProducts";
-import About from "./components/About";
-import Footer from "./components/Footer";
+
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
     <Router>
-      <Header />
-      <TopRibbon />
-
       <Routes>
         {/* Home Page */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Hero />
-              <TopSellers />
-              <RandomProducts />
-              <About />
-            </>
-          }
-        />
-
-        {/* Other Pages */}
-        {/* <Route path="/login" element={<Login />} />
-        <Route path="/cart" element={<Cart />} /> */}
-
-        {/* 404 Page */}
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="/" element={<Home />} />
+        {/* Sign up/in pages */}
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
-
-      <Footer />
     </Router>
   );
 };

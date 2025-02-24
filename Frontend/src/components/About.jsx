@@ -45,7 +45,7 @@ const About = () => {
               placeholder="Enter your email"
               className="w-full p-2 mt-2 border rounded"
             />
-            <button className="mt-3 px-4 py-2 border bg-brandOrange hover:bg-gray-100 hover:text-brandOrange hover:border-brandOrange text-white rounded">
+            <button className="mt-3 px-4 py-2 border bg-brandOrange hover:bg-gray-100 hover:text-brandOrange hover:border-brandOrange text-white rounded font-semibold">
               Subscribe
             </button>
           </div>
