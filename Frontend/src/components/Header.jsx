@@ -1,23 +1,37 @@
 import React from "react";
 import { GiCircuitry } from "react-icons/gi";
-import { MdPhoneAndroid } from "react-icons/md";
+import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <header className="max-w-7xl mx-auto flex justify-between items-center p-3">
+      {/* Logo */}
       <Link to={"/"} className="text-3xl flex items-center space-x-2 text-brandOrange">
         <GiCircuitry />
         <span>
           <span className="font-bold">XIR</span>ION
         </span>
       </Link>
-      <div className="flex items-center space-x-4">
-        <MdPhoneAndroid className="text-2xl text-gray-600" />
-        <div className="flex flex-col text-right font-semibold">
-          <span className="text-green-600">+254 717 055 495</span>
-          <span className="text-red-600">+254 789 335 955</span>
-        </div>
+
+      {/* Contact Section */}
+      <div className="flex items-center space-x-6">
+        {/* Clickable Call */}
+        <a href="tel:+254717055495" className="flex items-center space-x-2 hover:text-green-600">
+          <FaPhoneAlt className="text-green-600 text-lg" />
+          <span className="text-gray-500 font-semibold">+254 717 055 495</span>
+        </a>
+
+        {/* Clickable WhatsApp */}
+        <a
+          href="https://wa.me/254789335955"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-2 hover:text-green-600"
+        >
+          <FaWhatsapp className="text-green-600 text-lg" />
+          <span className="text-gray-500 font-semibold">+254 789 335 955</span>
+        </a>
       </div>
     </header>
   );

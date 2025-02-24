@@ -49,10 +49,10 @@ const Hero = () => {
             title: "Home & Kitchen",
             items: "Cookware, Dishes, Blenders, Curtains, Lamps",
           },
-          // {
-          //   title: "Toys & Games",
-          //   items: "Board Games, Dolls, Action Figures, Puzzles",
-          // },
+          {
+            title: "Toys & Games",
+            items: "Board Games, Dolls, Action Figures, Puzzles",
+          },
           {
             title: "Office Supplies",
             items: "Desks, Chairs, Printers, Notebooks, Whiteboards",
@@ -83,7 +83,7 @@ const Hero = () => {
               <img
                 src={src}
                 alt={`Slide ${index + 1}`}
-                className="w-full h-full object-cover border rounded-md border-gray-100 mt-2"
+                className="w-full h-full object-cover border rounded-md border-gray-100"
               />
             </SwiperSlide>
           ))}

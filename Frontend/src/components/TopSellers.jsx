@@ -129,6 +129,9 @@ const TopSellers = () => {
                       <h3 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition">
                         {product.title}
                       </h3>
+                      <p className="text-gray-500 text-xs mt-1">
+                        {product.description.slice(0, 100)}...
+                      </p>
 
                       <span>
                         {/* Price */}
