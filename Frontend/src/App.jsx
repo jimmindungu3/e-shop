@@ -4,7 +4,7 @@ import React from "react";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
-import EditAccount from "./components/EditAccount";
+import EditAccount from "./pages/EditAccount";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
