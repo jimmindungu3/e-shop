@@ -4,9 +4,9 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
-      fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
-      },
+      // fontFamily: {
+      //   roboto: ["Roboto", "manrope"],
+      // },
       colors: {
         brandOrange: "#FF6600",
       },

@@ -62,8 +62,8 @@ const Hero = () => {
             key={index}
             className="px-3 py-1 hover:bg-gray-200 cursor-pointer"
           >
-            <h3 className="font-medium text-gray-800">{category.title}</h3>
-            <p className="text-sm text-gray-600 ">{category.items}</p>
+            <h3 className="font-semibold text-gray-900">{category.title}</h3>
+            <p className="text-xs text-gray-500 ">{category.items}</p>
           </div>
         ))}
       </div>
