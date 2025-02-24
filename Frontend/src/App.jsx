@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import EditAccount from "./pages/EditAccount";
 import NotFound from "./pages/NotFound";
+import RecoverPassword from "./pages/RecoverPassword";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/recover-password" element={<RecoverPassword />} />
         <Route path="/edit-account" element={<EditAccount />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

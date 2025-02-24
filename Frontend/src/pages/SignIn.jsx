@@ -57,7 +57,7 @@ const SignIn = () => {
               <input type="checkbox" className="mr-2" />
               Remember me
             </label>
-            <Link to="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+            <Link to="/recover-password" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
               Forgot password?
             </Link>
           </div>
