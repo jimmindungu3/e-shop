@@ -152,7 +152,7 @@ const TopSellers = () => {
                       </span>
 
                       {/* Shop Now Button */}
-                      <button className="mt-2 bg-brandOrange text-white text-xs font-medium px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button className="mt-2 bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                         Shop Now
                       </button>
                     </div>

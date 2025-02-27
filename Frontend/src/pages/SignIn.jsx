@@ -18,7 +18,7 @@ const SignIn = () => {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+    <section className="dark:bg-gray-900 pt-2 md:pt-20 flex items-center justify-center">
       <div className="w-full bg-white rounded-lg shadow-md sm:max-w-md dark:bg-gray-800 dark:border dark:border-gray-700 p-6">
         <h1 className="text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
           Sign in to your account

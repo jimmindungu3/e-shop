@@ -19,7 +19,7 @@ const EditAccount = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="flex items-center justify-center pt-2 md:pt-20 p-4">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">Edit Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

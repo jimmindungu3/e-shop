@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
@@ -7,6 +8,11 @@ const RandomProducts = () => {
   const [randomProducts, setRandomProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const Navigate = useNavigate();
+
+  const handleProductPreview = (selectedProduct) => {
+    Navigate("/product-preview", { state: { product: selectedProduct } });
+  };
 
   useEffect(() => {
     const fetchRandomProducts = async () => {
@@ -61,6 +67,7 @@ const RandomProducts = () => {
             : randomProducts.map((product) => (
                 <div
                   key={product._id}
+                  onClick={() => handleProductPreview(product)}
                   className="product-card group bg-white shadow-sm rounded-lg p-2 cursor-pointer hover:shadow-md transition"
                 >
                   {/* Product Image */}
@@ -104,7 +111,7 @@ const RandomProducts = () => {
                       {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                     </p>
                     {/* Shop Now Button */}
-                    <button className="mt-2 bg-brandOrange text-white text-xs font-medium px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button className="mt-2 bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                       Shop Now
                     </button>
                   </div>
