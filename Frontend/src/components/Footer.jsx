@@ -93,7 +93,7 @@ const Footer = () => {
             </p> */}
           </div>
         </div>
-        <p className="text-sm mt-6">&copy; 2011 - 2025 CompanyName&reg;</p>
+        <p className="text-sm mt-6">&copy; 2011 - 2025 Xirion Africa&reg;</p>
       </div>
     </footer>
   );
