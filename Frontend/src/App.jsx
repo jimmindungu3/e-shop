@@ -10,6 +10,7 @@ import EditAccount from "./pages/EditAccount";
 import NotFound from "./pages/NotFound";
 import RecoverPassword from "./pages/RecoverPassword";
 import ProductPreview from "./components/ProductPreview";
+import Cart from "./components/cart";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/product-preview" element={<ProductPreview />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/recover-password" element={<RecoverPassword />} />
         <Route path="/edit-account" element={<EditAccount />} />
         <Route path="*" element={<NotFound />} />

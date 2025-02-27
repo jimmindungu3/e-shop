@@ -74,14 +74,14 @@ const TopRibbon = () => {
           </div>
 
           {/* Cart */}
-          <div className="relative flex items-center space-x-2 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-300">
+          <Link to="/cart" className="relative flex items-center space-x-2 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-300">
             <FaShoppingCart className="text-xl" />
             <span className="hidden sm:inline font-medium">Cart</span>
             {/* Cart Counter */}
             <span className="absolute -top-2 -right-5 bg-brandOrange text-white text-xs font-bold px-2 py-0.5 rounded-full">
               0
             </span>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
