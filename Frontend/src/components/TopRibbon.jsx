@@ -3,15 +3,34 @@ import { FaBars, FaUser, FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
+const categories = [
+  { title: "Computing" },
+  { title: "Gaming" },
+  { title: "Gadgets & Accessories" },
+  { title: "Beauty & Health" },
+  { title: "Electronics" },
+  { title: "Fashion & Style" },
+  { title: "Home & Kitchen" },
+  { title: "Toys & Games" },
+  { title: "Office Supplies" },
+];
+
 const TopRibbon = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const categoriesRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
+      }
+      if (
+        categoriesRef.current &&
+        !categoriesRef.current.contains(event.target)
+      ) {
+        setIsCategoriesOpen(false);
       }
     };
 
@@ -25,9 +44,26 @@ const TopRibbon = () => {
     <div className="bg-gray-200 sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center py-3 md:pr-6">
         {/* Left: Categories */}
-        <div className="flex items-center space-x-2 cursor-pointer hover:bg-gray-300 px-3 py-2 rounded-md">
-          <FaBars className="text-xl" />
-          <span className="hidden sm:inline font-medium">Categories</span>
+        <div ref={categoriesRef} className="relative">
+          <div
+            className="flex items-center space-x-2 cursor-pointer hover:bg-gray-300 px-3 py-2 rounded-md"
+            onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
+          >
+            <FaBars className="text-xl" />
+            <span className="hidden sm:inline font-medium">Categories</span>
+          </div>
+          {isCategoriesOpen && (
+            <div className="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-md overflow-hidden z-50">
+              {categories.map((category, index) => (
+                <div
+                  key={index}
+                  className="px-4 py-2 border-b hover:bg-gray-100"
+                >
+                  <span className="font-medium">{category.title}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Middle: Search Bar */}
@@ -45,10 +81,7 @@ const TopRibbon = () => {
         {/* Right: Account & Cart */}
         <div className="flex items-center space-x-4 relative">
           {/* Account Dropdown */}
-          <div
-            ref={dropdownRef}
-            className="relative"
-          >
+          <div ref={dropdownRef} className="relative">
             <div
               className="flex items-center space-x-2 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-300"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -56,17 +89,24 @@ const TopRibbon = () => {
               <FaUser className="text-xl" />
               <span className="hidden sm:inline font-medium">Account</span>
             </div>
-
-            {/* Dropdown Menu */}
             {isDropdownOpen && (
               <div className="absolute right-0 top-10 mt-2 w-48 bg-white rounded-lg shadow-md overflow-hidden z-50">
-                <Link to="/sign-in" className="block px-4 py-2 hover:bg-gray-100">
+                <Link
+                  to="/sign-in"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
                   Sign In
                 </Link>
-                <Link to="/sign-up" className="block px-4 py-2 hover:bg-gray-100">
+                <Link
+                  to="/sign-up"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
                   Sign Up
                 </Link>
-                <Link to="/edit-account" className="block px-4 py-2 hover:bg-gray-100">
+                <Link
+                  to="/edit-account"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
                   Edit Account
                 </Link>
               </div>
@@ -74,10 +114,12 @@ const TopRibbon = () => {
           </div>
 
           {/* Cart */}
-          <Link to="/cart" className="relative flex items-center space-x-2 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-300">
+          <Link
+            to="/cart"
+            className="relative flex items-center space-x-2 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-300"
+          >
             <FaShoppingCart className="text-xl" />
             <span className="hidden sm:inline font-medium">Cart</span>
-            {/* Cart Counter */}
             <span className="absolute -top-2 -right-5 bg-brandOrange text-white text-xs font-bold px-2 py-0.5 rounded-full">
               0
             </span>
