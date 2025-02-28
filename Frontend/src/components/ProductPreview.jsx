@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import About from "./About";
 import Footer from "./Footer";
@@ -11,6 +11,11 @@ const ProductPreview = () => {
     product?.images?.[0] || product?.image
   );
   const [quantity, setQuantity] = useState(1);
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!product) {
     return (
@@ -38,26 +43,11 @@ const ProductPreview = () => {
         {/* Product Details Section */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Product Images */}
-            <div className="space-y-4">
-              {/* Main Image */}
-              <div className="aspect-square w-full rounded-lg overflow-hidden border border-gray-200">
-                {selectedImage ? (
-                  <img
-                    src={selectedImage}
-                    alt={product.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500">
-                    No Image
-                  </div>
-                )}
-              </div>
-
-              {/* Image Gallery */}
-              {product.images && product.images.length > 1 && (
-                <div className="grid grid-cols-5 gap-2">
+            {/* Product Images - Modified for two-column layout */}
+            <div className="flex gap-4">
+              {/* Thumbnail Column - Vertical strip on the left */}
+              {product.images && product.images.length > 0 && (
+                <div className="flex flex-col gap-2 w-16">
                   {product.images.map((img, index) => (
                     <div
                       key={index}
@@ -77,6 +67,21 @@ const ProductPreview = () => {
                   ))}
                 </div>
               )}
+
+              {/* Main Image - Takes up most of the space on the right */}
+              <div className="flex-1 aspect-square rounded-lg overflow-hidden border border-gray-200">
+                {selectedImage ? (
+                  <img
+                    src={selectedImage}
+                    alt={product.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500">
+                    No Image
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Product Information */}
