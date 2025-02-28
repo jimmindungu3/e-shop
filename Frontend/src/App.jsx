@@ -10,7 +10,7 @@ import EditAccount from "./pages/EditAccount";
 import NotFound from "./pages/NotFound";
 import RecoverPassword from "./pages/RecoverPassword";
 import ProductPreview from "./components/ProductPreview";
-import Cart from "./components/cart";
+import Cart from "./pages/cart";
 
 const App = () => {
   return (
