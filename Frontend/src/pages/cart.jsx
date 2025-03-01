@@ -3,8 +3,7 @@ import { FaTrash } from "react-icons/fa";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import Footer from "../components/Footer";
 import About from "../components/About";
-import TopSellers from "../components/TopSellers";
-import RecentlyViewed from "../components/RecentlyViewed";
+import WishList from "../components/WishList";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([
@@ -146,7 +145,7 @@ const Cart = () => {
           </button>
         </div>
       </div>
-      <RecentlyViewed />
+      <WishList />
       <About />
       <Footer />
     </>
