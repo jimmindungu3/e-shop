@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import About from "./About";
 import Footer from "./Footer";
-import RecentlyViewed from "./RecentlyViewed";
 
 const ProductPreview = () => {
   const location = useLocation();
@@ -256,7 +255,6 @@ const ProductPreview = () => {
         </div>
       </div>
       {/* About and Footer components */}
-      <RecentlyViewed />
       <About />
       <Footer />
     </div>
