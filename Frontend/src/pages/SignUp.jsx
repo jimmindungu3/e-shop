@@ -28,7 +28,6 @@ const SignUp = () => {
       setPasswordsMatch(false);
       return;
     }
-
     setPasswordsMatch(true);
 
     try {
@@ -43,7 +42,7 @@ const SignUp = () => {
       const data = await response.json();
 
       if (response.status === 201) {
-        navigate("confirm-email");
+        navigate("/confirm-email");
         // Redirect user or clear form
       } else {
         console.error("Error:", data);

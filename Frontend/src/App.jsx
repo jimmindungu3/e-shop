@@ -11,7 +11,7 @@ import NotFound from "./pages/NotFound";
 import RecoverPassword from "./pages/RecoverPassword";
 import ProductPreview from "./components/ProductPreview";
 import Cart from "./pages/cart";
-import VerifyEmail from "./pages/ConfirmEmail";
+import ConfirmEmail from "./pages/ConfirmEmail";
 
 const App = () => {
   return (
