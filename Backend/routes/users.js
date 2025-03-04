@@ -6,6 +6,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const router = express.Router();
 
+const sendVerificationEmail = require("../services/email");
+
 // POST /api/register - Create new user route
 router.post("/register", async (req, res) => {
   try {
@@ -35,8 +37,10 @@ router.post("/register", async (req, res) => {
     });
 
     await newUser.save();
+    sendVerificationEmail(email)
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: "Server error." });
   }
 });
