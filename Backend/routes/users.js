@@ -6,13 +6,30 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const router = express.Router();
 
-const {sendVerificationCode, generateVerificationCode} = require("../services/sendCode");
+const {
+  sendVerificationCode,
+  generateVerificationCode,
+} = require("../services/sendCode");
 
 // POST /api/register - Create new user route
 router.post("/register", async (req, res) => {
   try {
-    const { firstName, lastName, email, phoneNumber, password, confirmPassword } = req.body;
-    if (!firstName || !lastName || !email || !phoneNumber || !password || !confirmPassword) {
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      password,
+      confirmPassword,
+    } = req.body;
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phoneNumber ||
+      !password ||
+      !confirmPassword
+    ) {
       return res.status(400).json({ error: "All fields are required." });
     }
 
@@ -22,7 +39,9 @@ router.post("/register", async (req, res) => {
     // Check if a user with the same email already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ error: "User with that email already exists" });
+      return res
+        .status(400)
+        .json({ error: "User with that email already exists" });
     }
 
     // Hash the password before saving
@@ -45,12 +64,57 @@ router.post("/register", async (req, res) => {
     // Send verification email only if user is saved successfully
     await sendVerificationCode(email, verificationCode);
 
-    res.status(201).json({ message: "User registered successfully. Verification code sent." });
+    res
+      .status(201)
+      .json({
+        message: "User registered successfully. Verification code sent.",
+      });
   } catch (error) {
     res.status(500).json({ error });
   }
 });
 
+// POST /api/verify-email - Verify user email
+router.post("/verify-email", async (req, res) => {
+  try {
+    const { email, verificationCode } = req.body;
+    if (!email || !verificationCode) {
+      return res
+        .status(400)
+        .json({ error: "Email and verification code are required." });
+    }
+
+    // Find user by email and verification code
+    const user = await User.findOne({ email, verificationCode });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ error: "Invalid verification code or email." });
+    }
+
+    // Check if the verification code is expired (30 minutes limit)
+    const codeCreatedAt = new Date(user.updatedAt);
+    const now = new Date();
+    const timeDiff = (now - codeCreatedAt) / (1000 * 60);
+
+    if (timeDiff > 30) {
+      return res
+        .status(400)
+        .json({
+          error: "Verification code has expired. Please request a new one.",
+        });
+    }
+
+    // Update user verification status
+    user.isVerified = true;
+    user.verificationCode = undefined; // Clear verification code after successful verification
+    await user.save();
+
+    res.status(200).json({ message: "Email verified successfully." });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
 
 // POST /api/signin - User sign-in route with JWT
 router.post("/signin", async (req, res) => {
@@ -123,6 +187,5 @@ router.delete("/user/:email", async (req, res) => {
     res.status(500).json({ error: "Server error.", details: error.message });
   }
 });
-
 
 module.exports = router;
