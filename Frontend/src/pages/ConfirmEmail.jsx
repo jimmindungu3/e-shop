@@ -27,7 +27,8 @@ const ConfirmEmail = () => {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/sign-in"); // Redirect to login page
+        localStorage.removeItem("email");  
+        navigate("/sign-in");
       } else {
         setError(data.error || "Invalid code. Please try again.");
       }
