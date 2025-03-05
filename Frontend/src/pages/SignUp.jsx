@@ -4,7 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {} from "react-icons/fa";
 
 const SignUp = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [hidePassword, setHidePassword] = useState(true);
   const [emailNotRegistered, setEmailNotRegistered] = useState(true);
@@ -42,8 +42,8 @@ const SignUp = () => {
       const data = await response.json();
 
       if (response.status === 201) {
-        navigate("/confirm-email");
-        // Redirect user or clear form
+        localStorage.setItem("email", formData.email);
+        navigate("/confirm-email", { state: formData.email }); // Redirect user to email confirmation and send email as state
       } else {
         console.error("Error:", data);
         if (data.error === "User with that email already exists")

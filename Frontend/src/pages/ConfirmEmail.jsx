@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ConfirmEmail = () => {
   const navigate = useNavigate();
-  const [code, setCode] = useState("");
+  const location = useLocation();
+  const [verificationCode, setverificationCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const email = location.state?.email || localStorage.getItem("email"); // Get email from state/localstorage sent from signup page
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,14 +20,13 @@ const ConfirmEmail = () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code }),
+          body: JSON.stringify({ verificationCode, email }),
         }
       );
 
       const data = await response.json();
 
       if (response.ok) {
-        alert("Email verified successfully!");
         navigate("/sign-in"); // Redirect to login page
       } else {
         setError(data.error || "Invalid code. Please try again.");
@@ -54,8 +55,8 @@ const ConfirmEmail = () => {
             <input
               type="text"
               name="code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
+              value={verificationCode}
+              onChange={(e) => setverificationCode(e.target.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Enter code"
               required
