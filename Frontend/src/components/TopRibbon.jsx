@@ -94,18 +94,21 @@ const TopRibbon = () => {
                 <Link
                   to="/sign-in"
                   className="block px-4 py-2 hover:bg-gray-100"
+                  onClick={() => setIsDropdownOpen(false)}
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/sign-up"
                   className="block px-4 py-2 hover:bg-gray-100"
+                  onClick={() => setIsDropdownOpen(false)}
                 >
                   Sign Up
                 </Link>
                 <Link
                   to="/edit-account"
                   className="block px-4 py-2 hover:bg-gray-100"
+                  onClick={() => setIsDropdownOpen(false)}
                 >
                   Edit Account
                 </Link>
