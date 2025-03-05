@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const router = express.Router();
 
-const sendVerificationEmail = require("../services/email");
+const {sendVerificationCode, generateVerificationCode} = require("../services/sendCode");
 
 // POST /api/register - Create new user route
 router.post("/register", async (req, res) => {
@@ -28,22 +28,29 @@ router.post("/register", async (req, res) => {
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Generate verification code
+    const verificationCode = generateVerificationCode();
+
     const newUser = new User({
       firstName,
       lastName,
       email,
       phoneNumber,
+      verificationCode,
       password: hashedPassword,
     });
 
     await newUser.save();
-    sendVerificationEmail(email)
-    res.status(201).json({ message: "User registered successfully" });
+
+    // Send verification email only if user is saved successfully
+    await sendVerificationCode(email, verificationCode);
+
+    res.status(201).json({ message: "User registered successfully. Verification code sent." });
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: "Server error." });
+    res.status(500).json({ error });
   }
 });
+
 
 // POST /api/signin - User sign-in route with JWT
 router.post("/signin", async (req, res) => {
@@ -98,5 +105,24 @@ router.put("/user/:id", async (req, res) => {
     res.status(500).json({ error: "Server error.", details: error.message });
   }
 });
+
+// DELETE /api/user/:email - Delete user by email
+router.delete("/user/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    // Find and delete the user
+    const deletedUser = await User.findOneAndDelete({ email });
+
+    if (!deletedUser) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    res.status(200).json({ message: "User deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ error: "Server error.", details: error.message });
+  }
+});
+
 
 module.exports = router;
