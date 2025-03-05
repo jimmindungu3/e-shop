@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import {} from "react-icons/fa";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [hidePassword, setHidePassword] = useState(true);
   const [emailNotRegistered, setEmailNotRegistered] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -29,6 +29,7 @@ const SignUp = () => {
       return;
     }
     setPasswordsMatch(true);
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("http://localhost:5000/api/users/register", {
@@ -43,28 +44,29 @@ const SignUp = () => {
 
       if (response.status === 201) {
         localStorage.setItem("email", formData.email);
-        navigate("/confirm-email", { state: formData.email }); // Redirect user to email confirmation and send email as state
+        navigate("/confirm-email", { state: formData.email });
       } else {
         console.error("Error:", data);
         if (data.error === "User with that email already exists")
           setEmailNotRegistered(false);
-        // alert(data.error);
       }
     } catch (error) {
       console.error("Request failed:", error);
       alert("Network error, please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <section className="pt-2 md:pt-12 flex items-center justify-center">
       <div className="w-full bg-white rounded-lg shadow-md sm:max-w-md p-6 border">
-        <h1 className="text-xl font-bold text-gray-900 md:text-2xl dark:text-white text-cente">
+        <h1 className="text-xl font-bold text-gray-900 md:text-2xl text-center">
           Create Account
         </h1>
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-1 text-sm font-medium text-gray-900">
               First Name
             </label>
             <input
@@ -72,13 +74,13 @@ const SignUp = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="John"
               required
             />
           </div>
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-1 text-sm font-medium text-gray-900">
               Last Name
             </label>
             <input
@@ -86,13 +88,13 @@ const SignUp = () => {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Doe"
               required
             />
           </div>
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-1 text-sm font-medium text-gray-900">
               Email
             </label>
             <input
@@ -105,15 +107,13 @@ const SignUp = () => {
               required
             />
           </div>
-          {emailNotRegistered ? (
-            <></>
-          ) : (
-            <div className="text-brandOrange">
+          {!emailNotRegistered && (
+            <div className="text-red-500">
               User with that email already exists!
             </div>
           )}
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-1 text-sm font-medium text-gray-900">
               Phone Number
             </label>
             <input
@@ -121,14 +121,14 @@ const SignUp = () => {
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="0712345678"
               required
             />
           </div>
           {/* Password Field */}
           <div className="relative">
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-1 text-sm font-medium text-gray-900">
               Password
             </label>
             <div className="relative">
@@ -137,7 +137,7 @@ const SignUp = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
                 placeholder="••••••••"
                 required
               />
@@ -150,49 +150,35 @@ const SignUp = () => {
               </button>
             </div>
           </div>
-
           {/* Confirm Password Field */}
           <div className="relative">
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-1 text-sm font-medium text-gray-900">
               Confirm Password
             </label>
-            <div className="relative">
-              <input
-                type={hidePassword ? "password" : "text"}
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="••••••••"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setHidePassword(!hidePassword)}
-                className="absolute inset-y-0 right-3 flex items-center text-gray-500"
-              >
-                {hidePassword ? <FaEye /> : <FaEyeSlash />}
-              </button>
-            </div>
+            <input
+              type={hidePassword ? "password" : "text"}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              placeholder="••••••••"
+              required
+            />
           </div>
-          {passwordsMatch ? (
-            <div className="display-none"></div>
-          ) : (
-            <div className="text-brandOrange">Passwords don't match</div>
+          {!passwordsMatch && (
+            <div className="text-red-500">Passwords don't match</div>
           )}
           <button
             type="submit"
-            className="w-full text-white bg-brandOrange hover:bg-orange-600 focus:ring-2 focus:outline-none font-semibold rounded-lg text-sm px-5 py-2.5 text-center"
+            className="w-full text-white bg-orange-500 hover:bg-orange-600 focus:ring-2 focus:outline-none font-semibold rounded-lg text-sm px-5 py-2.5 text-center"
+            disabled={isSubmitting}
           >
-            Sign Up
+            {isSubmitting ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
-        <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-4 text-center">
+        <p className="text-sm font-light text-gray-500 mt-4 text-center">
           Already have an account?{" "}
-          <Link
-            to="/sign-in"
-            className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-          >
+          <Link to="/sign-in" className="text-blue-600 hover:underline">
             Sign in
           </Link>
         </p>
