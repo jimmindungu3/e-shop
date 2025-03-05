@@ -64,11 +64,9 @@ router.post("/register", async (req, res) => {
     // Send verification email only if user is saved successfully
     await sendVerificationCode(email, verificationCode);
 
-    res
-      .status(201)
-      .json({
-        message: "User registered successfully. Verification code sent.",
-      });
+    res.status(201).json({
+      message: "User registered successfully. Verification code sent.",
+    });
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -98,11 +96,9 @@ router.post("/verify-email", async (req, res) => {
     const timeDiff = (now - codeCreatedAt) / (1000 * 60);
 
     if (timeDiff > 30) {
-      return res
-        .status(400)
-        .json({
-          error: "Verification code has expired. Please request a new one.",
-        });
+      return res.status(400).json({
+        error: "Verification code has expired. Please request a new one.",
+      });
     }
 
     // Update user verification status
@@ -116,7 +112,7 @@ router.post("/verify-email", async (req, res) => {
   }
 });
 
-// POST /api/signin - User sign-in route with JWT
+// POST /api/signin - User sign-in route
 router.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -138,9 +134,16 @@ router.post("/signin", async (req, res) => {
 
     const fullName = `${user.firstName} ${user.lastName}`;
 
+    // Set token as HTTP-only
+    res.cookie("xirionAuthToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 60 * 60 * 1000,
+    });
+
     res.status(200).json({
       message: "User signed in successfully.",
-      token,
       fullName,
     });
   } catch (error) {
