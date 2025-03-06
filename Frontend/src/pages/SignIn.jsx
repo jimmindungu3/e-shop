@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import { SignedInStatusContext } from "../App";
+
 const SignIn = () => {
+  const { handleSignedInstatus } = useContext(SignedInStatusContext);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -76,7 +80,9 @@ const SignIn = () => {
       }
 
       // Successful sign-in
-      localStorage.setItem("UserFullName", data.fullName);
+      localStorage.setItem("userFullName", data.fullName);
+      localStorage.setItem("signedInStatus", "true");
+      handleSignedInstatus(); // provided by context
       navigate("/");
     } catch (err) {
       setErrors((prev) => ({ ...prev, general: err.message }));

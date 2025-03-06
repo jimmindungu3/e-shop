@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { FaBars, FaUser, FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { SignedInStatusContext } from "../App";
 
 const categories = [
   { title: "Computing" },
@@ -15,11 +16,26 @@ const categories = [
   { title: "Office Supplies" },
 ];
 
+const getInitials = (fullName) => {
+  if (!fullName) return "";
+  return fullName.split(" ")[0];
+};
+
 const TopRibbon = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const dropdownRef = useRef(null);
   const categoriesRef = useRef(null);
+  const [initials, setInitials] = useState(null);
+
+  // Get signed-in status from context
+  const { signedInStatus, handleSignOut } = useContext(SignedInStatusContext);
+
+
+  useEffect(() => {
+    const userFullName = localStorage.getItem("userFullName");
+    if (userFullName) setInitials(getInitials(userFullName));
+  }, [signedInStatus]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -78,44 +94,8 @@ const TopRibbon = () => {
           </button>
         </div>
 
-        {/* Right: Account & Cart */}
+        {/* Right: Cart & Account */}
         <div className="flex items-center space-x-4 relative">
-          {/* Account Dropdown */}
-          <div ref={dropdownRef} className="relative">
-            <div
-              className="flex items-center space-x-2 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-300"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              <FaUser className="text-xl" />
-              <span className="hidden sm:inline font-medium">Account</span>
-            </div>
-            {isDropdownOpen && (
-              <div className="absolute right-0 top-10 mt-2 w-48 bg-white rounded-lg shadow-md overflow-hidden z-50">
-                <Link
-                  to="/sign-in"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/sign-up"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  Sign Up
-                </Link>
-                <Link
-                  to="/edit-account"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  Edit Account
-                </Link>
-              </div>
-            )}
-          </div>
-
           {/* Cart */}
           <Link
             to="/cart"
@@ -123,10 +103,61 @@ const TopRibbon = () => {
           >
             <FaShoppingCart className="text-xl" />
             <span className="hidden sm:inline font-medium">Cart</span>
-            <span className="absolute -top-2 -right-5 bg-brandOrange text-white text-xs font-bold px-2 py-0.5 rounded-full">
+            <span className="absolute -top-1 -right-2 bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
               0
             </span>
           </Link>
+          
+          {/* Account Dropdown */}
+          <div ref={dropdownRef} className="relative">
+            <div
+              className="flex items-center space-x-2 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-300"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              <FaUser className="text-xl" />
+              <span className="hidden sm:inline font-medium">
+                {signedInStatus ? initials : "Account"}
+              </span>
+            </div>
+            {isDropdownOpen && (
+              <div className="absolute right-0 top-10 mt-2 w-48 bg-white rounded-lg shadow-md overflow-hidden z-50">
+                {!signedInStatus ? (
+                  <>
+                    <Link
+                      to="/sign-in"
+                      className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      to="/sign-up"
+                      className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={() => handleSignOut()}
+                    >
+                      Sign Out
+                    </Link>
+                    <Link
+                      to="/edit-account"
+                      className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Edit Account
+                    </Link>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
