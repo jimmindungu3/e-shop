@@ -2,8 +2,10 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { SignedInStatusContext } from "../App";
+import Loader from "../components/Loader";
 
 const SignIn = () => {
+  const [loading, setLoading] = useState(false);
   const { handleSignedInstatus } = useContext(SignedInStatusContext);
 
   const navigate = useNavigate();
@@ -57,6 +59,7 @@ const SignIn = () => {
     }
 
     try {
+      setLoading(true);
       const response = await fetch("http://localhost:5000/api/users/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,11 +72,13 @@ const SignIn = () => {
       if (!response.ok) {
         // Handle specific error responses
         if (data.error === "Invalid credentials") {
+          setLoading(false);
           setErrors((prev) => ({
             ...prev,
             email: "No account found with this email",
           }));
         } else if (data.error === "Wrong password") {
+          setLoading(false);
           setErrors((prev) => ({ ...prev, password: "Incorrect password" }));
         }
         return;
@@ -158,7 +163,7 @@ const SignIn = () => {
             type="submit"
             className="w-full text-white bg-brandOrange hover:bg-brandOrangeDark focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-lg text-sm px-5 py-2.5"
           >
-            Sign in
+            {loading ? <Loader text={"Signing In"} /> : "Sign in"}
           </button>
 
           <p className="text-sm text-gray-500 dark:text-gray-400">
