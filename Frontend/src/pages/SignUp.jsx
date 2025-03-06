@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Loader from "../components/Loader";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [hidePassword, setHidePassword] = useState(true);
   const [emailNotRegistered, setEmailNotRegistered] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -29,7 +30,7 @@ const SignUp = () => {
       return;
     }
     setPasswordsMatch(true);
-    setIsSubmitting(true);
+    setIsLoading(true);
 
     try {
       const response = await fetch("http://localhost:5000/api/users/register", {
@@ -49,12 +50,13 @@ const SignUp = () => {
         console.error("Error:", data);
         if (data.error === "User with that email already exists")
           setEmailNotRegistered(false);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Request failed:", error);
       alert("Network error, please try again.");
     } finally {
-      setIsSubmitting(false);
+      setIsLoading(false);
     }
   };
 
@@ -155,25 +157,35 @@ const SignUp = () => {
             <label className="block mb-1 text-sm font-medium text-gray-900">
               Confirm Password
             </label>
-            <input
-              type={hidePassword ? "password" : "text"}
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="••••••••"
-              required
-            />
+            <div className="relative">
+              <input
+                type={hidePassword ? "password" : "text"}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                placeholder="••••••••"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setHidePassword(!hidePassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+              >
+                {hidePassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
+            </div>
           </div>
+
           {!passwordsMatch && (
             <div className="text-red-500">Passwords don't match</div>
           )}
           <button
             type="submit"
-            className="w-full text-white bg-orange-500 hover:bg-orange-600 focus:ring-2 focus:outline-none font-semibold rounded-lg text-sm px-5 py-2.5 text-center"
-            disabled={isSubmitting}
+            className="w-full text-white bg-orange-500 hover:bg-orange-600 focus:ring-2 focus:outline-none font-semibold rounded-lg text-sm px-5 py-2.5 text-center flex justify-center"
+            disabled={isLoading}
           >
-            {isSubmitting ? "Signing Up..." : "Sign Up"}
+            {isLoading ? <Loader text="Signing Up" /> : "Sign Up"}
           </button>
         </form>
         <p className="text-sm font-light text-gray-500 mt-4 text-center">
