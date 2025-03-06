@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { SignedInStatusContext } from "../App";
 import Loader from "../components/Loader";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true)
   const { handleSignedInstatus } = useContext(SignedInStatusContext);
 
   const navigate = useNavigate();
@@ -130,17 +132,26 @@ const SignIn = () => {
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Password
             </label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className={`w-full p-2 border rounded focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              }`}
-              placeholder="••••••••"
-              required
-            />
+            <div className="relative">
+              <input
+                type={hidePassword ? "password" : "text"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className={`w-full p-2 border rounded focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
+                  errors.password ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="••••••••"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setHidePassword(!hidePassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+              >
+                {hidePassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password}</p>
             )}
