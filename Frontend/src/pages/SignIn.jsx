@@ -10,7 +10,6 @@ const SignIn = () => {
   const [errors, setErrors] = useState({
     email: "",
     password: "",
-    general: "",
   });
 
   const handleChange = (e) => {
@@ -24,7 +23,7 @@ const SignIn = () => {
   };
 
   const validateForm = () => {
-    let formErrors = { email: "", password: "", general: "" };
+    let formErrors = { email: "", password: "" };
 
     // Email validation
     if (!formData.email) {
@@ -72,16 +71,12 @@ const SignIn = () => {
           }));
         } else if (data.error === "Wrong password") {
           setErrors((prev) => ({ ...prev, password: "Incorrect password" }));
-        } else {
-          setErrors((prev) => ({
-            ...prev,
-            general: data.error || "Sign-in failed",
-          }));
         }
         return;
       }
 
       // Successful sign-in
+      localStorage.setItem("UserFullName", data.fullName);
       navigate("/");
     } catch (err) {
       setErrors((prev) => ({ ...prev, general: err.message }));

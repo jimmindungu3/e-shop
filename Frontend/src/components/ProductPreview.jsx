@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import WishList from "./WishList"
 import About from "./About";
 import Footer from "./Footer";
 
@@ -255,6 +256,7 @@ const ProductPreview = () => {
         </div>
       </div>
       {/* About and Footer components */}
+      <WishList />
       <About />
       <Footer />
     </div>
