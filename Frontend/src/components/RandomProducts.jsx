@@ -68,7 +68,7 @@ const RandomProducts = () => {
                 <div
                   key={product._id}
                   onClick={() => handleProductPreview(product)}
-                  className="product-card group bg-white shadow-sm rounded-lg p-2 cursor-pointer hover:shadow-md transition"
+                  className="product-card group border shadow-sm rounded-lg p-2 cursor-pointer hover:shadow-md transition"
                 >
                   {/* Product Image */}
                   <div className="relative mb-2 max-w-[160px] sm:max-w-[200px] mx-auto">
