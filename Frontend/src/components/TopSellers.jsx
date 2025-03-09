@@ -36,11 +36,11 @@ const TopSellers = () => {
 
   // Skeleton loader component
   const ProductSkeleton = () => (
-    <div className="product-card group bg-white shadow-sm rounded-lg p-2">
+    <div className="product-card group bg-white shadow-sm rounded-lg p-2 flex flex-col">
       <div className="relative mb-2 max-w-[150px] sm:max-w-[180px] mx-auto">
         <div className="w-full aspect-square bg-gray-200 animate-pulse rounded-lg" />
       </div>
-      <div className="text-center">
+      <div className="text-center flex-grow flex flex-col justify-center">
         <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto mt-2 animate-pulse" />
         <div className="h-3 bg-gray-200 rounded w-1/4 mx-auto mt-1 animate-pulse" />
         <div className="h-6 bg-gray-200 rounded-full w-2/4 mx-auto mt-2 animate-pulse" />
@@ -106,7 +106,7 @@ const TopSellers = () => {
               ))
             : bestSellers.map((product) => (
                 <SwiperSlide key={product._id}>
-                  <div className="product-card group bg-white shadow-sm rounded-lg p-2 border hover:shadow-md transition">
+                  <div className="product-card group rounded-lg p-2 border hover:shadow-md transition flex flex-col">
                     {/* Product Image */}
                     <div className="relative mb-2 max-w-[160px] sm:max-w-[200px] mx-auto">
                       <div className="w-full aspect-square rounded-lg flex items-center justify-center overflow-hidden text-xs bg-gray-100">
@@ -131,12 +131,12 @@ const TopSellers = () => {
                     </div>
 
                     {/* Product Details */}
-                    <div className="px-2">
+                    <div className="px-2 flex-grow flex flex-col">
                       <h3 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition">
                         {product.title}
                       </h3>
-                      <p className="text-gray-500 text-xs mt-1">
-                        {product.description.slice(0, 100)}...
+                      <p className="text-gray-500 text-xs mt-1 flex-grow">
+                        {product.description.slice(0, 80)}...
                       </p>
 
                       <span>
