@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -6,9 +7,14 @@ import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
 const TopSellers = () => {
+  const Navigate = useNavigate();
   const [bestSellers, setBestSellers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const handleProductPreview = (product) => {
+    Navigate("/product-preview", { state: { product: product } });
+  };
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -100,7 +106,7 @@ const TopSellers = () => {
               ))
             : bestSellers.map((product) => (
                 <SwiperSlide key={product._id}>
-                  <div className="product-card group bg-white shadow-sm rounded-lg p-2 cursor-pointer hover:shadow-md transition">
+                  <div className="product-card group bg-white shadow-sm rounded-lg p-2 border hover:shadow-md transition">
                     {/* Product Image */}
                     <div className="relative mb-2 max-w-[160px] sm:max-w-[200px] mx-auto">
                       <div className="w-full aspect-square rounded-lg flex items-center justify-center overflow-hidden text-xs bg-gray-100">
@@ -152,7 +158,10 @@ const TopSellers = () => {
                       </span>
 
                       {/* Shop Now Button */}
-                      <button className="mt-2 bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        className="mt-2 bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => handleProductPreview(product)}
+                      >
                         Shop Now
                       </button>
                     </div>
