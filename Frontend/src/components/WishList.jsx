@@ -97,9 +97,7 @@ const WishList = () => {
   }, []);
 
   const navigateToProduct = (product) => {
-    // Navigate to product detail page
-    // Later, you can add code here to update localStorage with recently viewed products
-    navigate(`/product/${product._id}`, { state: { product } });
+    navigate(`/product-preview`, { state: { product } });
   };
 
   // Skeleton loader component
@@ -171,10 +169,7 @@ const WishList = () => {
             ))
           : recentProducts.map((product) => (
               <SwiperSlide key={product._id}>
-                <div
-                  className="product-card group bg-white shadow-sm rounded-lg p-2 cursor-pointer hover:shadow-md transition"
-                  onClick={() => navigateToProduct(product)}
-                >
+                <div className="product-card border rounded-lg p-2 group hover:shadow-md transition">
                   {/* Product Image */}
                   <div className="relative mb-2 max-w-[160px] sm:max-w-[200px] mx-auto">
                     <div className="w-full aspect-square rounded-lg flex items-center justify-center overflow-hidden text-xs bg-gray-100">
@@ -219,9 +214,12 @@ const WishList = () => {
                     </span>
 
                     {/* View Again Button */}
-                    {/* <button className="mt-2 bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      className="mt-2 bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => navigateToProduct(product)}
+                    >
                       View Again
-                    </button> */}
+                    </button>
                   </div>
                 </div>
               </SwiperSlide>
