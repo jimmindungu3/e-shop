@@ -122,11 +122,11 @@ router.post("/signin", async (req, res) => {
         .json({ error: "Email and password are required." });
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: "Invalid credentials." });
+    if (!user) return res.status(400).json({ error: "Invalid email" });
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword)
-      return res.status(400).json({ error: "Invalid credentials." });
+      return res.status(400).json({ error: "Invalid password" });
 
     const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
       expiresIn: "1h",

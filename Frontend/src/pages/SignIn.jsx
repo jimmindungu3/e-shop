@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
-  const [hidePassword, setHidePassword] = useState(true)
+  const [hidePassword, setHidePassword] = useState(true);
   const { handleSignedInstatus } = useContext(SignedInStatusContext);
 
   const navigate = useNavigate();
@@ -73,13 +73,13 @@ const SignIn = () => {
 
       if (!response.ok) {
         // Handle specific error responses
-        if (data.error === "Invalid credentials") {
+        if (data.error === "Invalid email") {
           setLoading(false);
           setErrors((prev) => ({
             ...prev,
             email: "No account found with this email",
           }));
-        } else if (data.error === "Wrong password") {
+        } else if (data.error === "Invalid password") {
           setLoading(false);
           setErrors((prev) => ({ ...prev, password: "Incorrect password" }));
         }
