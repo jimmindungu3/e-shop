@@ -12,7 +12,6 @@ import RecoverPassword from "./pages/RecoverPassword";
 import ProductPreview from "./components/ProductPreview";
 import Cart from "./pages/cart";
 import ConfirmEmail from "./pages/ConfirmEmail";
-import CreateProduct from "./components/CreateProduct";
 
 // Context
 export const SignedInStatusContext = createContext();
@@ -50,7 +49,6 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/recover-password" element={<RecoverPassword />} />
           <Route path="/edit-account" element={<EditAccount />} />
-          <Route path="create-product" element={<CreateProduct />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </SignedInStatusContext.Provider>
