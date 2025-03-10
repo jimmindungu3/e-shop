@@ -38,31 +38,56 @@ router.get("/random", async (req, res) => {
 router.get("/category/:category", async (req, res) => {
   try {
     const { category } = req.params;
-    // Finds products where the category array includes the specified category
-    const products = await Product.find({ category });
+
+    const products = await Product.find({
+      category: { $regex: category, $options: "i" }, // Case-insensitive match
+    });
+
+    // Handle case where no products match
+    if (products.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No products found in this category" });
+    }
+
     res.status(200).json(products);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 });
 
-// GET /api/products/keywords - Fetch products by multiple keywords provided as an array in the query string
+// GET /api/products/keywords - Fetch products by multiple keywords
 router.get("/keywords", async (req, res) => {
   try {
     let { keywords } = req.query;
+
     if (!keywords) {
       return res
         .status(400)
         .json({ error: "Keywords query parameter is required" });
     }
-    // Ensure keywords is an array
-    if (!Array.isArray(keywords)) {
-      keywords = [keywords];
+
+    // Convert single string into an array (comma-separated values)
+    const keywordsArray = keywords.split(",").map((keyword) => keyword.trim());
+
+    // Use $or and $regex to find products with similar keywords
+    const products = await Product.find({
+      keywords: {
+        $in: keywordsArray.map((keyword) => new RegExp(keyword, "i")), // Case-insensitive match
+      },
+    });
+
+    // Handle case where no products match
+    if (products.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No products found matching the given keywords" });
     }
-    // Finds products where the keywords array contains any of the provided keywords
-    const products = await Product.find({ keywords: { $in: keywords } });
+
     res.status(200).json(products);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 });
