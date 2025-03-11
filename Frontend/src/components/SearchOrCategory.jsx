@@ -41,8 +41,6 @@ const SearchOrCategory = () => {
         return;
       }
 
-      console.log("Fetching from:", url);
-
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
@@ -83,7 +81,7 @@ const SearchOrCategory = () => {
       <div className="max-w-7xl mx-auto px-2 py-6">
         <div className="flex items-center justify-between mb-4">
           {pageTitle && (
-            <h2 className="text-2xl font-bold text-brandOrange">
+            <h2 className="text-xl font-bold text-brandOrange">
               {pageTitle}
             </h2>
           )}
@@ -91,7 +89,7 @@ const SearchOrCategory = () => {
 
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8">
-            {[...Array(10)].map((_, index) => (
+            {[...Array(5)].map((_, index) => (
               <ProductSkeleton key={`skeleton-${index}`} />
             ))}
           </div>
@@ -110,7 +108,7 @@ const SearchOrCategory = () => {
                     {product.images && product.images.length > 0 ? (
                       <img
                         src={product.images[0]}
-                        alt={product.name || product.title}
+                        alt={product.title}
                         className="w-full h-full object-cover"
                       />
                     ) : (
