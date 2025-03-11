@@ -12,6 +12,7 @@ import RecoverPassword from "./pages/RecoverPassword";
 import ProductPreview from "./components/ProductPreview";
 import Cart from "./pages/cart";
 import ConfirmEmail from "./pages/ConfirmEmail";
+import SearchOrCategory from "./components/SearchOrCategory";
 
 // Context
 export const SignedInStatusContext = createContext();
@@ -43,6 +44,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product-preview" element={<ProductPreview />} />
+          <Route path="/products" element={<SearchOrCategory />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/confirm-email" element={<ConfirmEmail />} />

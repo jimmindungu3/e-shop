@@ -105,25 +105,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// GET /api/products/search?q= – Search products by title or description
-router.get("/search", async (req, res) => {
-  try {
-    const { q } = req.query;
-    if (!q) {
-      return res.status(400).json({ error: "Search query is required." });
-    }
-    const products = await Product.find({
-      $or: [
-        { title: { $regex: q, $options: "i" } },
-        { description: { $regex: q, $options: "i" } },
-      ],
-    });
-    res.status(200).json(products);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 // PUT /api/products/:id - Edit a product
 router.put("/:id", async (req, res) => {
   try {

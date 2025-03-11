@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaBars, FaUser, FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -27,10 +28,19 @@ const TopRibbon = () => {
   const dropdownRef = useRef(null);
   const categoriesRef = useRef(null);
   const [initials, setInitials] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/products?keywords=${encodeURIComponent(searchTerm)}`);
+    }
+  };
 
   // Get signed-in status from context
   const { signedInStatus, handleSignOut } = useContext(SignedInStatusContext);
-
 
   useEffect(() => {
     const userFullName = localStorage.getItem("userFullName");
@@ -71,12 +81,15 @@ const TopRibbon = () => {
           {isCategoriesOpen && (
             <div className="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-md overflow-hidden z-50">
               {categories.map((category, index) => (
-                <div
-                  key={index}
-                  className="px-4 py-2 border-b hover:bg-gray-100"
+                <Link
+                  to={`/products?category=${encodeURIComponent(
+                    category.title
+                  )}`}
+                  className="block px-4 py-2 border-b hover:bg-gray-100"
+                  onClick={() => setIsCategoriesOpen(false)}
                 >
                   <span className="font-medium">{category.title}</span>
-                </div>
+                </Link>
               ))}
             </div>
           )}
@@ -84,14 +97,24 @@ const TopRibbon = () => {
 
         {/* Middle: Search Bar */}
         <div className="flex items-center border border-gray-400 rounded-lg overflow-hidden h-10 w-full mx-4 lg:max-w-2xl">
-          <input
-            type="text"
-            placeholder="Search Products Here"
-            className="px-3 w-full outline-none h-full"
-          />
-          <button className="text-gray-600 bg-white px-4 h-full flex items-center justify-center">
-            <IoSearch />
-          </button>
+          <form
+            onSubmit={handleSearch}
+            className="flex items-center rounded-lg overflow-hidden h-10 w-full lg:max-w-2xl"
+          >
+            <input
+              type="text"
+              placeholder="Search Products Here"
+              className="px-3 w-full outline-none h-full"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="text-gray-600 bg-white px-4 h-full flex items-center justify-center"
+            >
+              <IoSearch />
+            </button>
+          </form>
         </div>
 
         {/* Right: Cart & Account */}
@@ -107,7 +130,7 @@ const TopRibbon = () => {
               0
             </span>
           </Link>
-          
+
           {/* Account Dropdown */}
           <div ref={dropdownRef} className="relative">
             <div
