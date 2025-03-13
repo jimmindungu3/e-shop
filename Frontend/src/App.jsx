@@ -10,7 +10,7 @@ import EditAccount from "./pages/EditAccount";
 import NotFound from "./pages/NotFound";
 import RecoverPassword from "./pages/RecoverPassword";
 import ProductPreview from "./components/ProductPreview";
-import Cart from './pages/Cart'
+import Cart from "./pages/Cart";
 import ConfirmEmail from "./pages/ConfirmEmail";
 import SearchOrCategory from "./components/SearchOrCategory";
 
@@ -70,7 +70,9 @@ const App = () => {
   const incrementProductCount = (productId) => {
     updateCart(
       cart.map((item) =>
-        item.product._id === productId ? { ...item, quantity: item.quantity + 1 } : item
+        item.product._id === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       )
     );
   };
@@ -95,7 +97,8 @@ const App = () => {
   const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
-    const savedWishlist = JSON.parse(localStorage.getItem("xirionWishlist")) || [];
+    const savedWishlist =
+      JSON.parse(localStorage.getItem("xirionWishlist")) || [];
     setWishlist(savedWishlist);
   }, []);
 
@@ -107,6 +110,7 @@ const App = () => {
   const addToWishlist = (product) => {
     if (!wishlist.some((item) => item._id === product._id)) {
       updateWishlist([...wishlist, product]);
+      console.log("Add to wishlist")
     }
   };
 
@@ -121,9 +125,17 @@ const App = () => {
         value={{ signedInStatus, handleSignedInStatus, handleSignOut }}
       >
         <CartContext.Provider
-          value={{ cart, addToCart, incrementProductCount, decrementProductCount, removeFromCart }}
+          value={{
+            cart,
+            addToCart,
+            incrementProductCount,
+            decrementProductCount,
+            removeFromCart,
+          }}
         >
-          <WishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist }}>
+          <WishlistContext.Provider
+            value={{ wishlist, addToWishlist, removeFromWishlist }}
+          >
             <TopRibbon />
             <Routes>
               <Route path="/" element={<Home />} />

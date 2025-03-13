@@ -77,7 +77,7 @@ const Cart = () => {
                   <div className="col-span-1 flex justify-center">
                     <button
                       onClick={() => removeFromCart(item.product._id)}
-                      className="text-gray-600 hover:text-gray-700 p-1"
+                      className="text-red-500 hover:text-red-600 p-1"
                       aria-label="Remove item"
                     >
                       <FaTrash size={14} />

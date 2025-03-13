@@ -109,6 +109,7 @@ const TopRibbon = () => {
             className="flex items-center rounded-lg overflow-hidden h-10 w-full lg:max-w-2xl"
           >
             <input
+              id="search"
               type="text"
               placeholder="Search Products Here"
               className="px-3 w-full outline-none h-full"
