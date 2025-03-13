@@ -46,7 +46,6 @@ const SearchOrCategory = () => {
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
 
         const data = await response.json();
-        console.log("Fetched products:", data);
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);

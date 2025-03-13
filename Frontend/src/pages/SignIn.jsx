@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [hidePassword, setHidePassword] = useState(true);
-  const { handleSignedInstatus } = useContext(SignedInStatusContext);
+  const { handleSignedInStatus } = useContext(SignedInStatusContext);
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -89,7 +89,7 @@ const SignIn = () => {
       // Successful sign-in
       localStorage.setItem("userFullName", data.fullName);
       localStorage.setItem("signedInStatus", "true");
-      handleSignedInstatus(); // provided by context
+      handleSignedInStatus(); // provided by context
       navigate("/");
     } catch (err) {
       setErrors((prev) => ({ ...prev, general: err.message }));

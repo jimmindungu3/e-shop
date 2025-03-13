@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaBars, FaUser, FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { SignedInStatusContext } from "../App";
+import { SignedInStatusContext, CartContext } from "../App";
 
 const categories = [
   { title: "Computing" },
@@ -41,6 +41,12 @@ const TopRibbon = () => {
 
   // Get signed-in status from context
   const { signedInStatus, handleSignOut } = useContext(SignedInStatusContext);
+
+  // Get cart from context to display item count
+  const { cart } = useContext(CartContext);
+
+  // Calculate total number of items in cart
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     const userFullName = localStorage.getItem("userFullName");
@@ -82,6 +88,7 @@ const TopRibbon = () => {
             <div className="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-md overflow-hidden z-50">
               {categories.map((category, index) => (
                 <Link
+                  key={index}
                   to={`/products?category=${encodeURIComponent(
                     category.title
                   )}`}
@@ -126,8 +133,9 @@ const TopRibbon = () => {
           >
             <FaShoppingCart className="text-xl" />
             <span className="hidden sm:inline font-medium">Cart</span>
-            <span className="absolute -top-1 -right-2 bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
-              0
+
+            <span className="absolute -top-1 -right-2 bg-brandOrange text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+              {cartItemCount || 0}
             </span>
           </Link>
 
