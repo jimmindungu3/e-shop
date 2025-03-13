@@ -36,11 +36,11 @@ const TopSellers = () => {
 
   // Skeleton loader component
   const ProductSkeleton = () => (
-    <div className="product-card group bg-white shadow-sm rounded-lg p-2 flex flex-col">
+    <div className="product-card group bg-white shadow-sm rounded-lg p-2">
       <div className="relative mb-2 max-w-[150px] sm:max-w-[180px] mx-auto">
         <div className="w-full aspect-square bg-gray-200 animate-pulse rounded-lg" />
       </div>
-      <div className="text-center flex-grow flex flex-col justify-center">
+      <div className="text-center">
         <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto mt-2 animate-pulse" />
         <div className="h-3 bg-gray-200 rounded w-1/4 mx-auto mt-1 animate-pulse" />
         <div className="h-6 bg-gray-200 rounded-full w-2/4 mx-auto mt-2 animate-pulse" />
