@@ -6,11 +6,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import { FaTrash } from "react-icons/fa";
-import { WishlistContext } from "../App";
+import { CartContext, WishlistContext } from "../App";
 
 const Wishlist = () => {
   const Navigate = useNavigate();
   const { wishlist, removeFromWishlist } = useContext(WishlistContext);
+  const { addToCart } = useContext(CartContext);
+
   
   const handleProductPreview = (product) => {
     Navigate("/product-preview", { state: { product: product } });
@@ -127,9 +129,9 @@ const Wishlist = () => {
                   {/* Shop Now Button */}
                   <button
                     className="bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => handleProductPreview(item)}
+                    onClick={() => addToCart(item, 1)}
                   >
-                    Shop Now
+                    Add To cart
                   </button>
                   
                   {/* Remove Button */}

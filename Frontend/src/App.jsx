@@ -110,7 +110,6 @@ const App = () => {
   const addToWishlist = (product) => {
     if (!wishlist.some((item) => item._id === product._id)) {
       updateWishlist([...wishlist, product]);
-      console.log("Add to wishlist")
     }
   };
 
