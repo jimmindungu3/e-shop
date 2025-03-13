@@ -16,9 +16,9 @@ const Cart = () => {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto p-4 my-8 border shadow-sm rounded-lg grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="max-w-7xl mx-auto p-4 my-8 border shadow-sm rounded-lg grid grid-cols-1 md:grid-cols-6 gap-4">
         {/* Main Column: Cart Items */}
-        <div className="md:col-span-3">
+        <div className="md:col-span-4">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Cart</h2>
 
           {cart.length === 0 ? (
@@ -45,7 +45,7 @@ const Cart = () => {
                       {item.product.title}
                     </h3>
                     <p className="text-sm text-gray-600 mt-1">
-                      KSh {Number(item.product.price || 0).toLocaleString()}
+                      KSh {(item.product.price).toLocaleString()}
                     </p>
                   </div>
 
@@ -55,7 +55,7 @@ const Cart = () => {
                       <button
                         onClick={() => decrementProductCount(item.product._id)}
                         disabled={item.quantity <= 1}
-                        className="p-1 bg-gray-200 rounded w-6 h-6 flex items-center justify-center disabled:opacity-50"
+                        className="p-1 bg-gray-200 hover:bg-gray-300 rounded w-6 h-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200"
                         aria-label="Decrease quantity"
                       >
                         <AiOutlineMinus size={14} />
@@ -65,7 +65,7 @@ const Cart = () => {
                       </span>
                       <button
                         onClick={() => incrementProductCount(item.product._id)}
-                        className="p-1 bg-gray-200 rounded w-6 h-6 flex items-center justify-center"
+                        className="p-1 bg-gray-200 hover:bg-gray-300 rounded w-6 h-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200"
                         aria-label="Increase quantity"
                       >
                         <AiOutlinePlus size={14} />
@@ -77,7 +77,7 @@ const Cart = () => {
                   <div className="col-span-1 flex justify-center">
                     <button
                       onClick={() => removeFromCart(item.product._id)}
-                      className="text-red-600 hover:text-red-800 p-1"
+                      className="text-gray-600 hover:text-gray-700 p-1"
                       aria-label="Remove item"
                     >
                       <FaTrash size={14} />
@@ -90,7 +90,7 @@ const Cart = () => {
         </div>
 
         {/* Order Summary */}
-        <div className="md:col-span-1 border p-4 rounded-lg h-fit sticky top-4">
+        <div className="md:col-span-2 border p-4 rounded-lg h-fit sticky top-4">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Order Summary
           </h2>
