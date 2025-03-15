@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ConfirmEmail = () => {
   const navigate = useNavigate();
@@ -27,7 +28,8 @@ const ConfirmEmail = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.removeItem("email");  
+        localStorage.removeItem("email");
+        toast.success("Your email has been confirmed")
         navigate("/sign-in");
       } else {
         setError(data.error || "Invalid code. Please try again.");
