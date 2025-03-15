@@ -96,16 +96,8 @@ const ProductPreview = () => {
                   <input
                     type="number"
                     min="1"
-                    max={product.quantity}
                     value={quantity}
-                    onChange={(e) =>
-                      setQuantity(
-                        Math.min(
-                          product.quantity,
-                          Math.max(1, parseInt(e.target.value) || 1)
-                        )
-                      )
-                    }
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
                     className="w-12 text-center border border-gray-300 rounded-lg"
                   />
                 </div>

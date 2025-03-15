@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaCheckCircle } from "react-icons/fa";
 
 import { SignedInStatusContext } from "../App";
 import Loader from "../components/Loader";
+
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -90,6 +92,7 @@ const SignIn = () => {
       localStorage.setItem("userFullName", data.fullName);
       localStorage.setItem("signedInStatus", "true");
       handleSignedInStatus(); // provided by context
+      toast.success("sign in successfull")
       navigate("/");
     } catch (err) {
       setErrors((prev) => ({ ...prev, general: err.message }));

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -9,14 +8,8 @@ import { FaTrash } from "react-icons/fa";
 import { CartContext, WishlistContext } from "../App";
 
 const Wishlist = () => {
-  const Navigate = useNavigate();
   const { wishlist, removeFromWishlist } = useContext(WishlistContext);
   const { addToCart } = useContext(CartContext);
-
-  
-  const handleProductPreview = (product) => {
-    Navigate("/product-preview", { state: { product: product } });
-  };
 
   // If wishlist is empty, don't render anything
   if (wishlist.length === 0) {
@@ -126,7 +119,7 @@ const Wishlist = () => {
 
                 {/* Action Buttons */}
                 <div className="flex space-x-2 mt-2">
-                  {/* Shop Now Button */}
+                  {/* Add To Cart Button */}
                   <button
                     className="bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                     onClick={() => addToCart(item, 1)}
@@ -137,7 +130,7 @@ const Wishlist = () => {
                   {/* Remove Button */}
                   <button
                     className="bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => removeFromWishlist(item._id || item.id)}
+                    onClick={() => removeFromWishlist(item)}
                   >
                     <FaTrash className="inline mr-1" />
                     Remove

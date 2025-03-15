@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import About from "../components/About";
 import WishList from "../components/WishList";
 import { CartContext } from "../App";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { cart, incrementProductCount, decrementProductCount, removeFromCart } =
@@ -22,7 +23,14 @@ const Cart = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Cart</h2>
 
           {cart.length === 0 ? (
-            <p className="text-gray-600">Your cart is empty.</p>
+            <>
+              <p className="text-gray-600">Your cart is empty.</p>
+              <Link to={"/"}>
+                <button className="mt-4 px-4 py-2 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition">
+                  Back To shop
+                </button>
+              </Link>
+            </>
           ) : (
             <div>
               {cart.map((item) => (
@@ -45,7 +53,7 @@ const Cart = () => {
                       {item.product.title}
                     </h3>
                     <p className="text-sm text-gray-600 mt-1">
-                      KSh {(item.product.price).toLocaleString()}
+                      KSh {item.product.price.toLocaleString()}
                     </p>
                   </div>
 
@@ -76,7 +84,7 @@ const Cart = () => {
                   {/* Delete Button */}
                   <div className="col-span-1 flex justify-center">
                     <button
-                      onClick={() => removeFromCart(item.product._id)}
+                      onClick={() => removeFromCart(item.product)}
                       className="text-red-500 hover:text-red-600 p-1"
                       aria-label="Remove item"
                     >

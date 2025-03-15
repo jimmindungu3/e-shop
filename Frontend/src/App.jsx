@@ -13,6 +13,7 @@ import ProductPreview from "./components/ProductPreview";
 import Cart from "./pages/Cart";
 import ConfirmEmail from "./pages/ConfirmEmail";
 import SearchOrCategory from "./components/SearchOrCategory";
+import { ToastContainer, Bounce, toast } from "react-toastify";
 
 // Contexts
 export const SignedInStatusContext = createContext();
@@ -37,6 +38,7 @@ const App = () => {
     localStorage.removeItem("xirionCart");
     localStorage.removeItem("xirionWishlist");
     setSignedInStatus(false);
+    toast.info("You have signed out")
     setCart([]);
     setWishlist([]);
   };
@@ -65,6 +67,7 @@ const App = () => {
       : [...cart, { product, quantity }];
 
     updateCart(updatedCart);
+    toast.success(`${quantity} ${product.title} added to cart`);
   };
 
   const incrementProductCount = (productId) => {
@@ -89,8 +92,9 @@ const App = () => {
     );
   };
 
-  const removeFromCart = (productId) => {
-    updateCart(cart.filter((item) => item.product._id !== productId));
+  const removeFromCart = (product) => {
+    updateCart(cart.filter((item) => item.product._id !== product._id));
+    toast.error(`${product.title} removed from cart`);
   };
 
   // Wishlist State
@@ -108,18 +112,35 @@ const App = () => {
   };
 
   const addToWishlist = (product) => {
-    if (!wishlist.some((item) => item._id === product._id)) {
+    if (wishlist.some((item) => item._id === product._id)) {
+      toast.info(`${product.title} already in wishlist`);
+    } else {
       updateWishlist([...wishlist, product]);
+      toast.success(`${product.title} added to wishlist`);
     }
   };
 
-  const removeFromWishlist = (productId) => {
-    updateWishlist(wishlist.filter((item) => item._id !== productId));
+  const removeFromWishlist = (product) => {
+    updateWishlist(wishlist.filter((item) => item._id !== product._id));
+    toast.error(`${product.title} removed from wishlist`);
   };
 
   return (
     <Router>
       <Header />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
       <SignedInStatusContext.Provider
         value={{ signedInStatus, handleSignedInStatus, handleSignOut }}
       >
