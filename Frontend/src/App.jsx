@@ -14,6 +14,7 @@ import Cart from "./pages/Cart";
 import ConfirmEmail from "./pages/ConfirmEmail";
 import SearchOrCategory from "./components/SearchOrCategory";
 import { ToastContainer, Bounce, toast } from "react-toastify";
+import Checkout from "./pages/Checkout.jsx";
 
 // Contexts
 export const SignedInStatusContext = createContext();
@@ -38,7 +39,7 @@ const App = () => {
     localStorage.removeItem("xirionCart");
     localStorage.removeItem("xirionWishlist");
     setSignedInStatus(false);
-    toast.info("You have signed out")
+    toast.info("You have signed out");
     setCart([]);
     setWishlist([]);
   };
@@ -165,6 +166,7 @@ const App = () => {
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/confirm-email" element={<ConfirmEmail />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/recover-password" element={<RecoverPassword />} />
               <Route path="/edit-account" element={<EditAccount />} />
               <Route path="*" element={<NotFound />} />

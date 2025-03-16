@@ -110,9 +110,13 @@ const Cart = () => {
               KSh {getTotalPrice().toLocaleString()}
             </span>
           </div>
-          <button className="w-full bg-orange-500 text-white py-2 font-semibold rounded-lg hover:bg-orange-600 transition">
-            Checkout (KSh {getTotalPrice().toLocaleString()})
-          </button>
+          {cart.length != 0 && (
+            <Link to={"/checkout"}>
+              <button className="w-full bg-orange-500 text-white py-2 font-semibold rounded-lg hover:bg-orange-600 transition">
+                Checkout (KSh {getTotalPrice().toLocaleString()})
+              </button>
+            </Link>
+          )}
         </div>
       </div>
 
