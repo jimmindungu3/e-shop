@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaAngleLeft } from "react-icons/fa";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import Footer from "../components/Footer";
 import About from "../components/About";
@@ -33,66 +33,79 @@ const Cart = () => {
             </>
           ) : (
             <div>
-              {cart.map((item) => (
-                <div
-                  key={item.product._id}
-                  className="grid grid-cols-5 items-center py-3 border-b"
-                >
-                  {/* Image */}
-                  <div className="col-span-1 flex items-center">
-                    <img
-                      src={item.product?.images?.[0] || item.product.image}
-                      alt={item.product.title}
-                      className="w-12 h-12 rounded-lg object-cover"
-                    />
-                  </div>
+              <div>
+                {cart.map((item) => (
+                  <div
+                    key={item.product._id}
+                    className="grid grid-cols-5 items-center py-3 border-b"
+                  >
+                    {/* Image */}
+                    <div className="col-span-1 flex items-center">
+                      <img
+                        src={item.product?.images?.[0] || item.product.image}
+                        alt={item.product.title}
+                        className="w-12 h-12 rounded-lg object-cover"
+                      />
+                    </div>
 
-                  {/* Description */}
-                  <div className="col-span-2">
-                    <h3 className="font-semibold text-gray-900 text-sm">
-                      {item.product.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 mt-1">
-                      KSh {item.product.price.toLocaleString()}
-                    </p>
-                  </div>
+                    {/* Description */}
+                    <div className="col-span-2">
+                      <h3 className="font-semibold text-gray-900 text-sm">
+                        {item.product.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-1">
+                        KSh {item.product.price.toLocaleString()}
+                      </p>
+                    </div>
 
-                  {/* Quantity Controls */}
-                  <div className="col-span-1 flex justify-center">
-                    <div className="flex items-center gap-1">
+                    {/* Quantity Controls */}
+                    <div className="col-span-1 flex justify-center">
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() =>
+                            decrementProductCount(item.product._id)
+                          }
+                          disabled={item.quantity <= 1}
+                          className="p-1 bg-gray-200 hover:bg-gray-300 rounded w-6 h-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200"
+                          aria-label="Decrease quantity"
+                        >
+                          <AiOutlineMinus size={14} />
+                        </button>
+                        <span className="w-6 text-center font-semibold text-gray-900">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() =>
+                            incrementProductCount(item.product._id)
+                          }
+                          className="p-1 bg-gray-200 hover:bg-gray-300 rounded w-6 h-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200"
+                          aria-label="Increase quantity"
+                        >
+                          <AiOutlinePlus size={14} />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Delete Button */}
+                    <div className="col-span-1 flex justify-center">
                       <button
-                        onClick={() => decrementProductCount(item.product._id)}
-                        disabled={item.quantity <= 1}
-                        className="p-1 bg-gray-200 hover:bg-gray-300 rounded w-6 h-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200"
-                        aria-label="Decrease quantity"
+                        onClick={() => removeFromCart(item.product)}
+                        className="text-red-500 hover:text-red-600 p-1"
+                        aria-label="Remove item"
                       >
-                        <AiOutlineMinus size={14} />
-                      </button>
-                      <span className="w-6 text-center font-semibold text-gray-900">
-                        {item.quantity}
-                      </span>
-                      <button
-                        onClick={() => incrementProductCount(item.product._id)}
-                        className="p-1 bg-gray-200 hover:bg-gray-300 rounded w-6 h-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200"
-                        aria-label="Increase quantity"
-                      >
-                        <AiOutlinePlus size={14} />
+                        <FaTrash size={14} />
                       </button>
                     </div>
                   </div>
-
-                  {/* Delete Button */}
-                  <div className="col-span-1 flex justify-center">
-                    <button
-                      onClick={() => removeFromCart(item.product)}
-                      className="text-red-500 hover:text-red-600 p-1"
-                      aria-label="Remove item"
-                    >
-                      <FaTrash size={14} />
-                    </button>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <Link to={"/"}>
+                <button className="mt-4 p-2 rounded-md font-semibold bg-brandOrange text-white hover:bg-orange-600 transition-all">
+                  <span className="flex items-center">
+                    <FaAngleLeft /> Shop Some More
+                  </span>
+                </button>
+              </Link>
             </div>
           )}
         </div>
