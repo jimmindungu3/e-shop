@@ -19,40 +19,41 @@ const Checkout = () => {
     cardExpiry: "",
     cardCVC: "",
     mpesaNumber: "",
+    order: [], // I want to send to the backend all products in cart as an array of product.id: product._id and quantity
   });
 
   // Cities in Kenya with their shipping fees
   const kenyanCities = [
     { name: "Nairobi", fee: 200 },
-    { name: "Mombasa", fee: 350 },
-    { name: "Kisumu", fee: 300 },
+    { name: "Mombasa", fee: 550 },
+    { name: "Kisumu", fee: 500 },
     { name: "Nakuru", fee: 250 },
     { name: "Eldoret", fee: 300 },
     { name: "Thika", fee: 220 },
-    { name: "Malindi", fee: 380 },
-    { name: "Kitale", fee: 320 },
-    { name: "Garissa", fee: 400 },
-    { name: "Kakamega", fee: 320 },
+    { name: "Malindi", fee: 5500 },
+    { name: "Kitale", fee: 450 },
+    { name: "Garissa", fee: 500 },
+    { name: "Kakamega", fee: 520 },
     { name: "Nyeri", fee: 250 },
     { name: "Machakos", fee: 240 },
-    { name: "Kisii", fee: 350 },
-    { name: "Kericho", fee: 280 },
-    { name: "Embu", fee: 280 },
+    { name: "Kisii", fee: 450 },
+    { name: "Kericho", fee: 400 },
+    { name: "Embu", fee: 380 },
   ];
 
   // Calculate subtotal
   const getSubtotal = () =>
     cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
 
-  // Calculate shipping based on city or 2% of goods value (whichever is higher)
+  // Calculate shipping based on city or 0.5% of goods value (whichever is higher)
   useEffect(() => {
     if (formData.city) {
       const selectedCity = kenyanCities.find(
         (city) => city.name === formData.city
       );
       const baseFee = selectedCity ? selectedCity.fee : 200;
-      const percentageFee = getSubtotal() * 0.01; // 1% of total goods worth
-      setShippingFee(Math.max(baseFee, percentageFee));
+      const percentageFee = getSubtotal() * 0.005; // 1% of total goods worth
+      setShippingFee(baseFee + percentageFee);
     }
   }, [formData.city, cart]);
 
@@ -69,8 +70,20 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Payment processing logic would go here
-    console.log("Processing payment:", paymentMethod, formData);
+
+    // Extract order items IDs & quantities from cart
+    const orderItems = cart.map((item) => ({
+      productId: item.product._id,
+      quantity: item.quantity,
+    }));
+
+    // Add order item IDs & quantities to cart before sending to backend
+    const orderDetails = {
+      ...formData, order: orderItems
+    }
+
+    // Payment processing logic goes here
+    console.log("Processing payment:", paymentMethod, orderDetails);
     // Redirect to success page or show confirmation
   };
 
@@ -134,34 +147,33 @@ const Checkout = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    />
+                  </div>
 
-                <div className="mt-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    />
+                  </div>
                 </div>
 
                 <div className="mt-4">
@@ -193,7 +205,7 @@ const Checkout = () => {
                   Select a payment method
                 </h3>
                 <div className="flex gap-4 mb-4">
-                <button
+                  <button
                     type="button"
                     onClick={() => setPaymentMethod("mpesa")}
                     className={`flex-1 py-3 px-4 rounded-lg border ${
@@ -217,7 +229,6 @@ const Checkout = () => {
                     <FaCreditCard className="text-gray-700" />
                     <span className="font-medium">Credit/Debit Card</span>
                   </button>
-                  
                 </div>
 
                 {/* Card Payment Form */}
@@ -308,15 +319,15 @@ const Checkout = () => {
               <div className="mb-4">
                 <div className="flex justify-between text-sm text-gray-600 mb-2">
                   <span>Items In Cart: {cart.length}</span>
-                  <span>KSh {getTotalPrice().toLocaleString()}</span>
+                  <span>KSh {getSubtotal()}</span>
                 </div>
                 <div className="flex justify-between text-sm text-gray-600 mb-2">
                   <span>Shipping Fee:</span>
-                  <span>Ksh. {shippingFee}</span>
+                  <span>Ksh. {shippingFee == 0 ? "_____" : shippingFee}</span>
                 </div>
                 <div className="border-t pt-2 mt-2 flex justify-between font-semibold">
                   <span>Total:</span>
-                  <span className="text-orange-600">KSh {shippingFee}</span>
+                  <span className="text-orange-600">KSh {getTotalPrice()}</span>
                 </div>
               </div>
 
@@ -357,11 +368,10 @@ const Checkout = () => {
               <button
                 type="submit"
                 form="checkoutForm"
-                className="w-full bg-orange-500 text-white py-3 font-semibold rounded-lg hover:bg-orange-600 transition flex items-center justify-center gap-2"
+                className="w-full bg-brandOrange text-white py-3 font-semibold rounded-lg hover:bg-orange-600 transition flex items-center justify-center gap-2"
               >
                 <FaLock size={14} />
-                Pay KSh{" "}
-                {(getTotalPrice() + shippingFee).toLocaleString()}
+                Pay KSh {getTotalPrice().toLocaleString()}
               </button>
 
               <div className="mt-4 text-xs text-gray-500 text-center">
