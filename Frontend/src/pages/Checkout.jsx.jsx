@@ -52,7 +52,7 @@ const Checkout = () => {
         (city) => city.name === formData.city
       );
       const baseFee = selectedCity ? selectedCity.fee : 200;
-      const percentageFee = getSubtotal() * 0.005; // 1% of total goods worth
+      const percentageFee = Math.ceil(getSubtotal() * 0.005); // 1% of total goods worth
       setShippingFee(baseFee + percentageFee);
     }
   }, [formData.city, cart]);
@@ -323,7 +323,7 @@ const Checkout = () => {
                 </div>
                 <div className="flex justify-between text-sm text-gray-600 mb-2">
                   <span>Shipping Fee:</span>
-                  <span>Ksh. {shippingFee == 0 ? "_____" : shippingFee}</span>
+                  <span>Ksh. {shippingFee}</span>
                 </div>
                 <div className="border-t pt-2 mt-2 flex justify-between font-semibold">
                   <span>Total:</span>

@@ -45,7 +45,7 @@ const Wishlist = () => {
 
       {/* Single heading for the entire wishlist section */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-bold text-brandOrange">Wishlist</h2>
+        <h2 className="text-2xl font-bold">Wishlist</h2>
       </div>
 
       <Swiper
