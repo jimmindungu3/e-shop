@@ -2,10 +2,12 @@ const express = require("express");
 const env = require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const DB_URI = process.env.DB_URI;
+app.use(bodyParser.json());
 
 // Middleware
 app.use(express.json());
@@ -19,10 +21,12 @@ app.use(
 // Import routes
 const productRoutes = require("./routes/products");
 const usersRoutes = require("./routes/users");
+const stkPushRoutes = require("./routes/stkPush");
 
 // Use routes
 app.use("/api/products", productRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/stkpush", stkPushRoutes);
 
 // DB Connection
 mongoose
