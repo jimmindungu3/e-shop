@@ -128,7 +128,10 @@ const Cart = () => {
             {cart.length != 0 && (
               <Link to={"/checkout"}>
                 <button className="w-full bg-orange-500 text-white py-2 font-semibold rounded-lg hover:bg-orange-600 transition">
-                  <span className="flex gap-2 items-center justify-center"><MdOutlineShoppingCartCheckout />Checkout</span>
+                  <span className="flex gap-2 items-center justify-center">
+                    <MdOutlineShoppingCartCheckout />
+                    Checkout
+                  </span>
                 </button>
               </Link>
             )}

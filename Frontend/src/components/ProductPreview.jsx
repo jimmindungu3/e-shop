@@ -103,16 +103,16 @@ const ProductPreview = () => {
                 </div>
 
                 {/* Buttons */}
-                <div className="mt-6 flex space-x-2">
+                <div className="mt-6 flex space-x-2 md:space-x-6 font-semibold">
                   <button
                     onClick={() => addToCart(product, quantity)}
-                    className="flex-1 bg-brandOrange text-white py-3 px-4 rounded-full hover:bg-orange-600 transition"
+                    className="flex-1 bg-brandOrange text-white  py-2 md:py-3 px-1 md:px-4 rounded-lg hover:bg-orange-600 transition"
                   >
                     Add to Cart
                   </button>
                   <button
                     onClick={() => addToWishlist(product)}
-                    className="flex-1 border border-brandOrange text-brandOrange rounded-full py-3 px-4 hover:bg-orange-100 transition"
+                    className="flex-1 border border-brandOrange text-brandOrange rounded-lg py-2 md:py-3 px-1 md:px-4 hover:bg-orange-100 transition"
                   >
                     Add to Wishlist
                   </button>

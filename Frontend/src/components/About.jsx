@@ -5,9 +5,7 @@ const About = () => {
   return (
     <div className="bg-gray-200 pb-6 px-4">
       <div className="max-w-7xl mx-auto mt-8 py-8 space-y-4 text-sm">
-        <h2 className="text-3xl font-bold">
-          Why Shop With US
-        </h2>
+        <h2 className="text-3xl font-bold">Why Shop With US</h2>
         <p>
           Welcome to our ecommerce platform, where quality meets affordability.
           We strive to bring you the best products at unbeatable prices.

@@ -75,9 +75,7 @@ const Wishlist = () => {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <span className="text-gray-500 text-sm">
-                      No Image
-                    </span>
+                    <span className="text-gray-500 text-sm">No Image</span>
                   )}
                 </div>
                 {/* Bestseller Tag */}
@@ -100,16 +98,17 @@ const Wishlist = () => {
                 <span>
                   {/* Price */}
                   <p className="text-brandOrange font-bold mt-1 text-sm">
-                    Ksh. {(typeof item.price === 'number' ? item.price.toLocaleString() : item.price)}
+                    Ksh.{" "}
+                    {typeof item.price === "number"
+                      ? item.price.toLocaleString()
+                      : item.price}
                   </p>
 
                   {/* Stock Availability */}
                   {item.quantity !== undefined && (
                     <p
                       className={`mt-1 text-xs font-medium ${
-                        item.quantity > 0
-                          ? "text-green-600"
-                          : "text-red-600"
+                        item.quantity > 0 ? "text-green-600" : "text-red-600"
                       }`}
                     >
                       {item.quantity > 0 ? "In Stock" : "Out of Stock"}
@@ -118,21 +117,21 @@ const Wishlist = () => {
                 </span>
 
                 {/* Action Buttons */}
-                <div className="flex space-x-2 mt-2">
+                <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0 mt-2">
                   {/* Add To Cart Button */}
                   <button
-                    className="bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                     onClick={() => addToCart(item, 1)}
                   >
                     Add To cart
                   </button>
-                  
+
                   {/* Remove Button */}
                   <button
-                    className="bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="flex items-center bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                     onClick={() => removeFromWishlist(item)}
                   >
-                    <FaTrash className="inline mr-1" />
+                    <FaTrash className="mr-1" />
                     Remove
                   </button>
                 </div>

@@ -79,8 +79,9 @@ const Checkout = () => {
 
     // Add order item IDs & quantities to cart before sending to backend
     const orderDetails = {
-      ...formData, order: orderItems
-    }
+      ...formData,
+      order: orderItems,
+    };
 
     // Payment processing logic goes here
     console.log("Processing payment:", paymentMethod, orderDetails);
@@ -125,6 +126,7 @@ const Checkout = () => {
                     <input
                       type="text"
                       name="firstName"
+                      placeholder="John"
                       value={formData.firstName}
                       onChange={handleInputChange}
                       required
@@ -138,6 +140,7 @@ const Checkout = () => {
                     <input
                       type="text"
                       name="lastName"
+                      placeholder="Kamau"
                       value={formData.lastName}
                       onChange={handleInputChange}
                       required
@@ -154,6 +157,7 @@ const Checkout = () => {
                     <input
                       type="email"
                       name="email"
+                      placeholder="johnkamau@email.com"
                       value={formData.email}
                       onChange={handleInputChange}
                       required
@@ -168,6 +172,7 @@ const Checkout = () => {
                     <input
                       type="tel"
                       name="phone"
+                      placeholder="07XX XXX XXX"
                       value={formData.phone}
                       onChange={handleInputChange}
                       required

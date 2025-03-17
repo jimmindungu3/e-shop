@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white text-sm py-10 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {/* My Account */}
           <div>
             <h3 className="font-bold">My account</h3>
