@@ -21,12 +21,12 @@ app.use(
 // Import routes
 const productRoutes = require("./routes/products");
 const usersRoutes = require("./routes/users");
-const stkPushRoutes = require("./routes/stkPush");
+const orderRoutes = require("./routes/orders");
 
 // Use routes
 app.use("/api/products", productRoutes);
 app.use("/api/users", usersRoutes);
-app.use("/api/stkpush", stkPushRoutes);
+app.use("/api/orders", orderRoutes);
 
 // DB Connection
 mongoose

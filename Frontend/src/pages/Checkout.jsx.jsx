@@ -45,14 +45,14 @@ const Checkout = () => {
   const getSubtotal = () =>
     cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
 
-  // Calculate shipping based on city or 0.5% of goods value (whichever is higher)
+  // Calculate shipping based on city or 0.005% of goods value (whichever is higher)
   useEffect(() => {
     if (formData.city) {
       const selectedCity = kenyanCities.find(
         (city) => city.name === formData.city
       );
       const baseFee = selectedCity ? selectedCity.fee : 200;
-      const percentageFee = Math.ceil(getSubtotal() * 0.005); // 1% of total goods worth
+      const percentageFee = Math.ceil(getSubtotal() * 0.005);
       setShippingFee(baseFee + percentageFee);
     }
   }, [formData.city, cart]);
@@ -68,7 +68,7 @@ const Checkout = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Extract order items IDs & quantities from cart
@@ -85,6 +85,18 @@ const Checkout = () => {
 
     // Payment processing logic goes here
     console.log("Processing payment:", paymentMethod, orderDetails);
+
+    const response = await fetch("http://localhost:5000/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderDetails),
+      credentials: "include",
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+
     // Redirect to success page or show confirmation
   };
 
