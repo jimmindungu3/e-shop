@@ -1,26 +1,32 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  client: {
-    name: { type: String, required: true },
+  customer: {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    address: { type: String, required: true },
+    city: { type: String, required: true },
   },
-  products: [
+  items: [
     {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+      productName: { type: String, required: true },
+      price: { type: Number, required: true },
       quantity: { type: Number, required: true, min: 1 },
+      itemTotal: { type: Number, required: true },
     },
   ],
-  payment: {
-    method: { type: String, enum: ["Mpesa", "Credit Card", "Cash on Delivery"], required: true },
-    transactionId: { type: String },
-    status: { type: String, enum: ["Pending", "Completed", "Failed"], default: "Pending" },
+  pricing: {
+    subtotal: { type: Number, required: true },
+    shippingFee: { type: Number, required: true },
+    totalAmount: { type: Number, required: true },
   },
-  delivery: {
-    status: { type: String, enum: ["Pending", "Shipped", "Delivered", "Cancelled"], default: "Pending" },
-    trackingNumber: { type: String },
+  paymentMethod: { type: String, enum: ["mpesa", "card"], required: true },
+  status: {
+    type: String,
+    enum: ["pending", "paid", "shipped", "delivered", "cancelled", "payment_failed"],
+    default: "pending",
   },
   createdAt: { type: Date, default: Date.now },
 });
