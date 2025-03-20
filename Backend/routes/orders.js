@@ -5,7 +5,7 @@ const router = express.Router();
 
 const { initiateSTKPush, handleSTKCallback } = require("../services/mpesa");
 
-// Cities in Kenya with their shipping fees
+// Cities with their shipping fees
 const kenyanCities = [
   { name: "Nairobi", fee: 200 },
   { name: "Mombasa", fee: 550 },
@@ -37,6 +37,8 @@ const formatNumber = (number) => {
     return "Invalid Number";
   }
 };
+let orderDetails = {};
+let newOrder;
 
 router.post("/", async (req, res) => {
   try {
@@ -122,12 +124,9 @@ router.post("/", async (req, res) => {
         shippingFee,
         totalAmount,
       },
-      paymentMethod: mpesaNumber ? "mpesa" : "card",
-      status: "pending",
+      // status: "placed",
       createdAt: new Date(),
     };
-
-    // const savedOrder = await Order.create(orderDetails);
 
     // Process M-Pesa payment
     {
@@ -167,24 +166,14 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/mpesa/callback", async (req, res) => {
-  console.log(" ================== Callback Hit! ================== ");
+  console.log("🚀 ================== Callback Hit! ================== ");
+  console.log(req.body);
 
-  try {
-    // Process the callback
-    const result = await handleSTKCallback(req.body);
-    console.log("Callback processing result:", result);
+  handleSTKCallback(req.body, orderDetails);
 
-    // Always return 200 to M-Pesa regardless of our internal processing
-    return res
-      .status(200)
-      .json({ ResultCode: 0, ResultDesc: "Callback received" });
-  } catch (error) {
-    console.error("Error in callback route:", error);
-    // Still return 200 to M-Pesa even if we have internal errors
-    return res
-      .status(200)
-      .json({ ResultCode: 0, ResultDesc: "Callback received" });
-  }
+  return res
+    .status(200)
+    .json({ ResultCode: 0, ResultDesc: "Callback received" });
 });
 
 module.exports = router;

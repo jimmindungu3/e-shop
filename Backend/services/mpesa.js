@@ -1,4 +1,5 @@
 const axios = require("axios");
+const Order = require("../models/order");
 require("dotenv").config();
 
 const {
@@ -82,49 +83,38 @@ const initiateSTKPush = async (phoneNumber, amount) => {
   }
 };
 
-const handleSTKCallback = async (callbackData) => {
-  try {
-    console.log("M-Pesa callback received:", JSON.stringify(callbackData, null, 2));
+const handleSTKCallback = async (callBackObject, orderDetails) => {
+  const stkCallback = callBackObject.Body.stkCallback;
 
-    const { ResultCode, ResultDesc, CallbackMetadata } = callbackData.Body.stkCallback;
-    
-    // Log the result
-    console.log(`M-Pesa Result: Code=${ResultCode}, Desc=${ResultDesc}`);
-    
-    if (ResultCode === 0) {
-      // Payment successful
-      // Extract payment details from CallbackMetadata
-      const paymentDetails = {};
-      
-      if (CallbackMetadata && CallbackMetadata.Item) {
-        CallbackMetadata.Item.forEach(item => {
-          if (item.Name === "MpesaReceiptNumber") paymentDetails.receiptNumber = item.Value;
-          if (item.Name === "TransactionDate") paymentDetails.transactionDate = item.Value;
-          if (item.Name === "PhoneNumber") paymentDetails.phoneNumber = item.Value;
-          if (item.Name === "Amount") paymentDetails.amount = item.Value;
-        });
-      }
-      
-      console.log("Payment details:", paymentDetails);
-      
-      // Here you would update your order with payment details
-      // Example: await Order.findOneAndUpdate({ checkoutRequestId: callbackData.Body.stkCallback.CheckoutRequestID }, 
-      //          { status: 'paid', paymentDetails: paymentDetails }, { new: true });
-      
-      return { success: true, paymentDetails };
-    } else {
-      // Payment failed
-      console.error(`Payment failed: ${ResultDesc}`);
-      
-      // Here you would update your order status
-      // Example: await Order.findOneAndUpdate({ checkoutRequestId: callbackData.Body.stkCallback.CheckoutRequestID },
-      //          { status: 'failed', failureReason: ResultDesc }, { new: true });
-      
-      return { success: false, message: ResultDesc };
-    }
-  } catch (error) {
-    console.error("Error processing M-Pesa callback:", error);
-    return { success: false, message: error.message };
+  const { ResultCode, ResultDesc, CallbackMetadata } = stkCallback;
+  console.log(
+    `🔔 STK Callback received - ResultCode: ${ResultCode}, Desc: ${ResultDesc}`
+  );
+
+  if (ResultCode === 0) {
+    const amount = CallbackMetadata?.Item?.find(
+      (item) => item.Name === "Amount"
+    )?.Value;
+    const receipt = CallbackMetadata?.Item?.find(
+      (item) => item.Name === "MpesaReceiptNumber"
+    )?.Value;
+    // add receipt to orderDetails
+    orderDetails.mpesaConfirmationCode = receipt;
+    const phone = CallbackMetadata?.Item?.find(
+      (item) => item.Name === "PhoneNumber"
+    )?.Value;
+    console.log(
+      `✅ Payment Successful - Amount: ${amount}, Receipt: ${receipt}, Phone: ${phone}`
+    );
+
+    // Save to db here
+    newOrder = new Order(orderDetails);
+    const savedOrder = await newOrder.save(newOrder);
+    console.log(savedOrder);
+  } else if (ResultCode === 1032) {
+    console.log("❌ Request Cancelled by User");
+  } else {
+    console.log(`⚠️ Payment Failed - Code: ${ResultCode}, Desc: ${ResultDesc}`);
   }
 };
 

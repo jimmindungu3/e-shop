@@ -10,8 +10,11 @@ const orderSchema = new mongoose.Schema({
   },
   items: [
     {
-      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
-      productName: { type: String, required: true },
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
       price: { type: Number, required: true },
       quantity: { type: Number, required: true, min: 1 },
       itemTotal: { type: Number, required: true },
@@ -22,12 +25,12 @@ const orderSchema = new mongoose.Schema({
     shippingFee: { type: Number, required: true },
     totalAmount: { type: Number, required: true },
   },
-  paymentMethod: { type: String, enum: ["mpesa", "card"], required: true },
   status: {
     type: String,
-    enum: ["pending", "paid", "shipped", "delivered", "cancelled", "payment_failed"],
-    default: "pending",
+    enum: ["placed", "shipped", "delivered", "cancelled"],
+    default: "placed",
   },
+  mpesaConfirmationCode: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
