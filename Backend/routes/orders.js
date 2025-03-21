@@ -38,7 +38,6 @@ const formatNumber = (number) => {
   }
 };
 let orderDetails = {};
-let newOrder;
 
 router.post("/", async (req, res) => {
   try {
@@ -64,7 +63,7 @@ router.post("/", async (req, res) => {
     // Get shipping fee for selected city
     const selectedCity = kenyanCities.find((c) => c.name === city);
     if (!selectedCity) {
-      return res.status(400).json({ error: "Invalid city selected" });
+      return res.status(400).json({ error: "Invalid city" });
     }
 
     // Calculate order total
@@ -169,7 +168,7 @@ router.post("/mpesa/callback", async (req, res) => {
   console.log("🚀 ================== Callback Hit! ================== ");
   console.log(req.body);
 
-  handleSTKCallback(req.body, orderDetails);
+  ResultCode = handleSTKCallback(req.body, orderDetails);
 
   return res
     .status(200)
