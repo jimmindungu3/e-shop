@@ -44,5 +44,5 @@ mongoose
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "We're up!!!" });
+  res.json({ message: "We're up!!" });
 });
