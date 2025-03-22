@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import About from "./About";
 import Footer from "./Footer";
+
+import { CartContext } from "../App";
 
 // set the base url for different environments
 const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
@@ -16,6 +18,7 @@ const SearchOrCategory = () => {
   const [pageTitle, setPageTitle] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -35,9 +38,13 @@ const SearchOrCategory = () => {
 
       let url = "";
       if (category) {
-        url = `${BASE_URL}/api/products/category/${encodeURIComponent(category)}`;
+        url = `${BASE_URL}/api/products/category/${encodeURIComponent(
+          category
+        )}`;
       } else if (keywords) {
-        url = `${BASE_URL}/api/products/keywords?keywords=${encodeURIComponent(keywords)}`;
+        url = `${BASE_URL}/api/products/keywords?keywords=${encodeURIComponent(
+          keywords
+        )}`;
       }
 
       if (!url) {
@@ -54,7 +61,7 @@ const SearchOrCategory = () => {
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setTimeout(() => setLoading(false), 500); // Match the 500ms delay from RandomProducts
+        setTimeout(() => setLoading(false), 500);
       }
     };
 
@@ -65,7 +72,6 @@ const SearchOrCategory = () => {
     navigate("/product-preview", { state: { product } });
   };
 
-  // Adding the ProductSkeleton component from RandomProducts
   const ProductSkeleton = () => (
     <div className="product-card group bg-white shadow-sm rounded-lg p-2">
       <div className="relative mb-2 max-w-[150px] sm:max-w-[180px] mx-auto">
@@ -146,12 +152,20 @@ const SearchOrCategory = () => {
                     {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                   </p>
                   {/* Shop Now Button */}
-                  <button
-                    className="mt-2 bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => handleProductPreview(product)}
-                  >
-                    Shop Now
-                  </button>
+                  <div className="flex flex-col gap-y-2 justify-between mt-3">
+                    <button
+                      className="bg-brandOrange border border-brandOrange w-full text-white text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => addToCart(product, 1)}
+                    >
+                      Add To Cart
+                    </button>
+                    <button
+                      className="border border-brandOrange w-full text-brandOrange text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => handleProductPreview(product)}
+                    >
+                      More Details
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

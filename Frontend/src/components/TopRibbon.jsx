@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaBars, FaUser, FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
+
 import { SignedInStatusContext, CartContext } from "../App";
 
 const categories = [
@@ -30,6 +31,9 @@ const TopRibbon = () => {
   const [initials, setInitials] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const { signedInStatus, handleSignOut } = useContext(SignedInStatusContext);
+  const { cart } = useContext(CartContext);
+
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
@@ -38,12 +42,6 @@ const TopRibbon = () => {
       navigate(`/products?keywords=${encodeURIComponent(searchTerm)}`);
     }
   };
-
-  // Get signed-in status from context
-  const { signedInStatus, handleSignOut } = useContext(SignedInStatusContext);
-
-  // Get cart from context to display item count
-  const { cart } = useContext(CartContext);
 
   // Calculate total number of items in cart
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);

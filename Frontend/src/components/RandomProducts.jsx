@@ -58,7 +58,7 @@ const RandomProducts = () => {
   return (
     <div className="max-w-7xl mx-auto px-2 mt-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-bold text-brandOrange">Latest Stock</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Latest Stock</h2>
       </div>
 
       {error ? (
@@ -117,15 +117,15 @@ const RandomProducts = () => {
                       {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                     </p>
                     {/* Shop Now Button */}
-                    <div className="flex flex-col md:flex-row md:gap-4 justify-between">
+                    <div className="flex flex-col gap-y-2 mt-3">
                       <button
-                        className="mt-2 bg-brandOrange border border-brandOrange w-full text-white text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="bg-brandOrange border border-brandOrange w-full text-white text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={() => addToCart(product)}
                       >
                         Add To Cart
                       </button>
                       <button
-                        className="mt-2 border border-brandOrange w-full text-brandOrange text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="border border-brandOrange w-full text-brandOrange text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={() => handleProductPreview(product)}
                       >
                         More Details
