@@ -117,7 +117,7 @@ const Wishlist = () => {
                 </span>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0 mt-2">
+                <div className="flex flex-col md:flex-row md:justify-between space-y-2 md:space-y-0 mt-2">
                   {/* Add To Cart Button */}
                   <button
                     className="bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
@@ -128,11 +128,11 @@ const Wishlist = () => {
 
                   {/* Remove Button */}
                   <button
-                    className="flex items-center bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                    className="flex items-center justify-center bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                     onClick={() => removeFromWishlist(item)}
                   >
                     <FaTrash className="mr-1" />
-                    Remove
+                    Remove From List
                   </button>
                 </div>
               </div>

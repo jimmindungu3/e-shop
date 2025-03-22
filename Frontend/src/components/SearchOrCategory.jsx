@@ -35,9 +35,9 @@ const SearchOrCategory = () => {
 
       let url = "";
       if (category) {
-        url = `${BASE_URL}/category/${encodeURIComponent(category)}`;
+        url = `${BASE_URL}/api/products/category/${encodeURIComponent(category)}`;
       } else if (keywords) {
-        url = `${BASE_URL}/keywords?keywords=${encodeURIComponent(keywords)}`;
+        url = `${BASE_URL}/api/products/keywords?keywords=${encodeURIComponent(keywords)}`;
       }
 
       if (!url) {
