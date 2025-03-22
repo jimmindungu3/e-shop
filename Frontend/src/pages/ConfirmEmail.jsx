@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
+const PROD_URL_BASE = import.meta.env.VITE_PROD_URL_BASE;
+const BASE_URL =
+  ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
+
 const ConfirmEmail = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,7 +22,7 @@ const ConfirmEmail = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/verify-email",
+        `${BASE_URL}/api/users/verify-email`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

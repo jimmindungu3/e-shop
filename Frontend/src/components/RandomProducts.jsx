@@ -4,6 +4,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
+// set the base url for different environments
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
+const PROD_URL_BASE = import.meta.env.VITE_PROD_URL_BASE;
+const BASE_URL =
+  ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
+
 const RandomProducts = () => {
   const [randomProducts, setRandomProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,9 +23,7 @@ const RandomProducts = () => {
   useEffect(() => {
     const fetchRandomProducts = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/products/random"
-        );
+        const response = await fetch(`${BASE_URL}/api/products/random`);
         if (!response.ok) throw new Error("Failed to fetch products");
         const data = await response.json();
         setRandomProducts(data);

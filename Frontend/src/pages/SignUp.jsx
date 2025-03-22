@@ -3,6 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Loader from "../components/Loader";
 
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
+const PROD_URL_BASE = import.meta.env.VITE_PROD_URL_BASE;
+const BASE_URL =
+  ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [passwordsMatch, setPasswordsMatch] = useState(true);
@@ -33,7 +38,7 @@ const SignUp = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/register", {
+      const response = await fetch(`${BASE_URL}/api/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

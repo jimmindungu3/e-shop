@@ -1,11 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaCheckCircle } from "react-icons/fa";
-
 import { SignedInStatusContext } from "../App";
 import Loader from "../components/Loader";
-
 import { toast } from "react-toastify";
+
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
+const PROD_URL_BASE = import.meta.env.VITE_PROD_URL_BASE;
+const BASE_URL =
+  ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -64,7 +67,7 @@ const SignIn = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/users/signin", {
+      const response = await fetch(`${BASE_URL}/api/users/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

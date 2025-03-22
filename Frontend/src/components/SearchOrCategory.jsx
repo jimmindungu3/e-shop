@@ -4,7 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import About from "./About";
 import Footer from "./Footer";
 
-const BASE_URL = "http://localhost:5000/api/products";
+// set the base url for different environments
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
+const PROD_URL_BASE = import.meta.env.VITE_PROD_URL_BASE;
+const BASE_URL =
+  ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
 
 const SearchOrCategory = () => {
   const [products, setProducts] = useState([]);
@@ -80,9 +84,7 @@ const SearchOrCategory = () => {
       <div className="max-w-7xl mx-auto px-2 py-6">
         <div className="flex items-center justify-between mb-4">
           {pageTitle && (
-            <h2 className="text-xl font-bold text-brandOrange">
-              {pageTitle}
-            </h2>
+            <h2 className="text-xl font-bold text-brandOrange">{pageTitle}</h2>
           )}
         </div>
 
@@ -93,7 +95,9 @@ const SearchOrCategory = () => {
             ))}
           </div>
         ) : products.length === 0 ? (
-          <p className="text-red-500 font-semibol text-center">Oops! No products found. Try again later</p>
+          <p className="text-red-500 font-semibol text-center">
+            Oops! No products found. Try again later
+          </p>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8">
             {products.map((product) => (

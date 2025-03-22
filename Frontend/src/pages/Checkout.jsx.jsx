@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import About from "../components/About";
 
+// set the base url for different environments
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
+const PROD_URL_BASE = import.meta.env.VITE_PROD_URL_BASE;
+const BASE_URL =
+  ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
+
 const Checkout = () => {
   const { cart } = useContext(CartContext);
   const [paymentMethod, setPaymentMethod] = useState("mpesa");
@@ -86,7 +92,7 @@ const Checkout = () => {
     // Payment processing logic goes here
     console.log("Processing payment:", paymentMethod, orderDetails);
 
-    const response = await fetch("http://localhost:5000/api/orders", {
+    const response = await fetch(`${BASE_URL}/api/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orderDetails),

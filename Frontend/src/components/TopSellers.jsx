@@ -6,6 +6,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
+
+// set the base url for different environments
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
+const PROD_URL_BASE = import.meta.env.VITE_PROD_URL_BASE;
+const BASE_URL =
+  ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
+
 const TopSellers = () => {
   const Navigate = useNavigate();
   const [bestSellers, setBestSellers] = useState([]);
@@ -19,7 +26,7 @@ const TopSellers = () => {
   useEffect(() => {
     const fetchBestSellers = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/products/random");
+        const res = await fetch(`${BASE_URL}/api/products/random`);
         if (!res.ok) throw new Error("Network response was not ok");
         const data = await res.json();
         setBestSellers(data);
