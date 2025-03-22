@@ -15,7 +15,7 @@ const Header = () => {
       </Link>
 
       {/* Contact Section */}
-      <div className="flex items-center space-x-6">
+      <div className="flex flex-col md:flex-row md:gap-x-6">
         {/* Clickable Call */}
         <a href="tel:+254717055495" className="flex items-center space-x-2 hover:text-green-600">
           <FaPhoneAlt className="text-green-600 text-lg" />

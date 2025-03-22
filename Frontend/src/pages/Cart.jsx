@@ -22,7 +22,7 @@ const Cart = () => {
         <div className="mx-2 p-4 my-8 border shadow-sm rounded-lg grid grid-cols-1 md:grid-cols-6 gap-4">
           {/* Main Column: Cart Items */}
           <div className="md:col-span-4">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 ">Cart</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b">Cart</h2>
 
             {cart.length === 0 ? (
               <>
