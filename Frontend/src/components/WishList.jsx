@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
+
+import { CartContext, WishlistContext } from "../App";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
-import { FaTrash } from "react-icons/fa";
-import { CartContext, WishlistContext } from "../App";
 
 const Wishlist = () => {
   const { wishlist, removeFromWishlist } = useContext(WishlistContext);
@@ -117,10 +118,10 @@ const Wishlist = () => {
                 </span>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col md:flex-row md:justify-between space-y-2 md:space-y-0 mt-2">
+                <div className="flex flex-col gap-y-2 md:space-y-0 mt-2">
                   {/* Add To Cart Button */}
                   <button
-                    className="bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                    className="border border-brandOrange bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                     onClick={() => addToCart(item, 1)}
                   >
                     Add To cart
@@ -128,10 +129,9 @@ const Wishlist = () => {
 
                   {/* Remove Button */}
                   <button
-                    className="flex items-center justify-center bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                    className="flex items-center justify-center border border-gray-500 bg-primary text-gray-500 text-xs font-semibold px-3 py-1 rounded-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                     onClick={() => removeFromWishlist(item)}
                   >
-                    <FaTrash className="mr-1" />
                     Remove From List
                   </button>
                 </div>

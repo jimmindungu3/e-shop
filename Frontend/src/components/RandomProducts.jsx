@@ -10,7 +10,7 @@ import { CartContext } from "../App";
 const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
 const PROD_URL_BASE = import.meta.env.VITE_PROD_URL_BASE;
 const BASE_URL =
-ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
+  ENVIRONMENT === "DEVELOPMENT" ? "http://localhost:5000" : PROD_URL_BASE;
 
 const RandomProducts = () => {
   const [randomProducts, setRandomProducts] = useState([]);
@@ -117,21 +117,20 @@ const RandomProducts = () => {
                       {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                     </p>
                     {/* Shop Now Button */}
-                    <div className="mflex justify-between">
-                    <button
-                      className="mt-2 bg-brandOrange border border-brandOrange w-full text-white text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={() => addToCart(product)}
-                    >
-                      Add To Cart
-                    </button>
-                    <button
-                      className="mt-2 border border-brandOrange w-full text-brandOrange text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={() => handleProductPreview(product)}
-                    >
-                      More Details
-                    </button>
+                    <div className="flex flex-col md:flex-row md:gap-4 justify-between">
+                      <button
+                        className="mt-2 bg-brandOrange border border-brandOrange w-full text-white text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => addToCart(product)}
+                      >
+                        Add To Cart
+                      </button>
+                      <button
+                        className="mt-2 border border-brandOrange w-full text-brandOrange text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => handleProductPreview(product)}
+                      >
+                        More Details
+                      </button>
                     </div>
-                    
                   </div>
                 </div>
               ))}
