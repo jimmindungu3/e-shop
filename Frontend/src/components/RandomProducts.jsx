@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
+
+import { CartContext } from "../App";
 
 // set the base url for different environments
 const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
@@ -14,6 +16,7 @@ const RandomProducts = () => {
   const [randomProducts, setRandomProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { addToCart } = useContext(CartContext);
   const Navigate = useNavigate();
 
   const handleProductPreview = (selectedProduct) => {
@@ -114,12 +117,20 @@ const RandomProducts = () => {
                       {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                     </p>
                     {/* Shop Now Button */}
-                    <button
-                      className="mt-2 bg-brandOrange text-white text-xs font-semibold px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={() => handleProductPreview(product)}
-                    >
-                      Shop Now
-                    </button>
+                    <div className="flex flex-col md:flex-row md:gap-4 justify-between">
+                      <button
+                        className="mt-2 bg-brandOrange border border-brandOrange w-full text-white text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => addToCart(product)}
+                      >
+                        Add To Cart
+                      </button>
+                      <button
+                        className="mt-2 border border-brandOrange w-full text-brandOrange text-xs font-semibold px-3 py-1 rounded-md md:opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => handleProductPreview(product)}
+                      >
+                        More Details
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
