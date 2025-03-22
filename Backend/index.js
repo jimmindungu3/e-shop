@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://xirion-africa.onrender.com"],
+    origin: ["http://localhost:5173", "https://xirion-africa.vercel.app/"],
     credentials: true,
   })
 );
