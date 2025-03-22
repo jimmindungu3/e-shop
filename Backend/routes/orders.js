@@ -1,6 +1,5 @@
 const express = require("express");
 const Product = require("../models/product");
-const Order = require("../models/order");
 const router = express.Router();
 
 const { initiateSTKPush, handleSTKCallback } = require("../services/mpesa");
